@@ -1,0 +1,105 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+
+			// 用户Login
+			$("#login").click(function() {
+				var data = {
+					"userCd" : "tenant",
+					"password" : ""
+				};
+
+				$("#request").text(JSON.stringify(data, null, "  "));
+				var url = "ndims/ui_if/cert/login";
+				callAjax(url, data);
+			});
+
+			// 当前Session的用户Logout
+			$("#logout").click(function() {
+				var data = {};
+
+				$("#request").text(JSON.stringify(data, null, "  "));
+				var url = "ndims/ui_if/cert/logout";
+				callAjax(url, data);
+			});
+			
+			// 当前Session的用户是否已经Login
+			$("#isLogin").click(function() {
+				var data = {
+					"userCd" : "tenant",
+				};
+
+				$("#request").text(JSON.stringify(data, null, "  "));
+				var url = "ndims/ui_if/cert/isLogin";
+				callAjax(url, data);
+			});
+			
+		});
+	</script>
+
+	<script type="text/javascript">
+		function callAjax(url, data) {
+			$
+					.ajax({
+						type : 'POST',
+						url : url,
+						contentType : 'application/json;charset=utf-8',
+						headers : {
+							'x-jp-co-intra-mart-ajax-request-from-imui-form-util' : 'true'
+						},
+						data : JSON.stringify(data),
+						dataType : 'json',
+						success : function(result) {
+							if (!result.error) {
+								$("#result").text(
+										JSON.stringify(result, null, "  "));
+								return result;
+							} else {
+								alert("处理失败！");
+								$("#result").text(
+										JSON.stringify(result, null, "  "));
+							}
+						},
+						error : function(XMLHttpRequest, errorMessage, error) {
+							alert("发生Ajax错误！:" + errorMessage);
+							$("#result").text(XMLHttpRequest.responseText);
+						}
+					});
+		}
+	</script>
+</header>
+
+<body>
+
+	<div>
+		<button type="button" id="login">用户Login</button>
+		<button type="button" id="logout">当前Session的用户Logout</button>
+		<button type="button" id="isLogin">当前Session的用户是否已经Login</button>
+	</div>
+
+	<br>
+
+	<div>
+		<table border="1">
+			<tr>
+				<td>Request参数：</td>
+				<td><textarea id="request" cols="80" rows="20"></textarea></td>
+			</tr>
+
+			<tr>
+				<td>运行结果：</td>
+				<td><textarea id="result" cols="80" rows="20"></textarea></td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

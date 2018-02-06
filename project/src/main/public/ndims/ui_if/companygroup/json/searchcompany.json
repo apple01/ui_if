@@ -1,0 +1,19 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.companygroup.treeview",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "companyCd": null,
+        "isDisabled": true
+    },
+    "composite": {
+        "companyGroupCd": "",
+        "companyGroupSetCd": "",
+        "displayName": "",
+        "description": ""
+    },
+    "start": 1,
+    "count": 0,
+    "sortTarget": "",
+    "sortDirection": ""
+}

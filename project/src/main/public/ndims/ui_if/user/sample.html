@@ -1,0 +1,388 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+        	// 检索用户列表
+          $("#search").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/user/json/search.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/user/search";
+                callAjax(url, data);
+              });
+          });
+
+        	// 新增用户
+          $("#addUser").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/user/json/adduser.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddUserInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/user/setuser";
+                callAjax(url, data);
+              });
+          });
+        	
+          // 获得用户信息
+          $("#getUser").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/user/json/getuser.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetUserInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/user/getuser";
+                callAjax(url, data);
+              });
+          });
+
+          // 编辑用户信息
+          $("#setUser").click(function() {
+        	  
+              if (editTargetUserData == null) {
+            	  alert("更新用户信息之前请新增或获得编辑对象的用户信息。");
+            	  return;
+              }
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/user/json/setuser.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetUserInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/user/setuser";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除用户信息
+          $("#remove").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/user/json/remove.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/user/remove";
+                callAjax(url, data);
+              });
+          });
+        });
+        
+        var editTargetUserData = null; 
+
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        if (result.data) {
+                        	// 为了测试编辑处理，暂存编辑对象的数据
+                        	editTargetUserData = result.data;
+                        }
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        // 设定新增用户参数
+        function setAddUserInfo(data) {
+            // 设定用户Code
+            var main = data.modelInfo["jp.co.intra_mart.master.user.detail.main"];
+            main.userCd = "user001";  // 自主发行唯一的Cd
+            
+            // 设定用户基本信息（和多语言无关的部分）
+            var profileAttach = data.modelInfo["jp.co.intra_mart.master.user.detail.profileAttach"];
+            profileAttach.sex = "0";
+            
+            // 设定用户基本信息（和多语言（中文）有关的部分）
+            var localedata = profileAttach.localedata.zh_CN;
+            localedata.userName = "用户001";
+            localedata.userSearchName = "用户001";
+            localedata.zipCode = "200010";
+            localedata.address1 = "address1";
+            localedata.address2 = "address2";
+            localedata.address3 = "address3";
+            localedata.telephoneNumber = "68881234";
+            localedata.extensionNumber = "001";
+            localedata.faxNumber = "68881235";
+            localedata.extensionFaxNumber = "002";
+            localedata.mobileNumber = "13816800001";
+            localedata.emailAddress1 = "test1@test.com";
+            localedata.emailAddress2 = "test3@test.com";
+            localedata.mobileEmailAddress = "test3@test.com";
+            localedata.url = "http://url";
+            localedata.notes = "备注";
+            
+            // 设定用户账号信息
+            var accountAttach = data.modelInfo["jp.co.intra_mart.master.user.detail.accountAttach"];
+            accountAttach.password = "123456";
+            accountAttach.confirmPassword = "123456";
+            accountAttach.pagePatternId = "im_theme_dropdown_black";  //主题ID
+            
+            // 设定用户账号身份信息（如果需要设定的话）
+            var roleTermsInfo = data.modelInfo["jp.co.intra_mart.master.user.detail.roleAttach"].roleTermsInfo;
+            var roleTermInfo = null;
+            roleTermInfo = {};
+            roleTermInfo.roleId = "im_workflow_user";
+            roleTermInfo.created = true;                                                 // 是否是新追加身份 
+            roleTermInfo.startDate = "1900/01/01 00:00:00";
+            roleTermInfo.endDate = "3000/01/01 00:00:00";
+            roleTermsInfo.push(roleTermInfo);
+            roleTermInfo = {};
+            roleTermInfo.roleId = "tenant_manager";
+            roleTermInfo.created = true; 
+            roleTermInfo.startDate = "1900/01/01 00:00:00";
+            roleTermInfo.endDate = "3000/01/01 00:00:00";
+            roleTermsInfo.push(roleTermInfo);
+            
+            // 设定用户所属部门组织信息（如果需要设定的话）
+            var depmentTermsInfo = data.modelInfo["jp.co.intra_mart.master.user.detail.departmentAttach"].termsInfo;
+            var depmentTermInfo = null;
+            depmentTermInfo = {};
+            depmentTermInfo.companyCd = "comp_sample_01";
+            depmentTermInfo.departmentSetCd = "comp_sample_01";
+            depmentTermInfo.departmentCd = "dept_sample_10";
+            depmentTermInfo.deleteFlag = false;
+            depmentTermInfo.post = "ps003";                                        // 职务Code（如果需要设定的话）
+            depmentTermInfo.departmentMain = true;                           // 是否主所属
+            depmentTermInfo.created = true;                                        // 是否是新追加所属部门 
+            depmentTermsInfo.push(depmentTermInfo);
+            depmentTermInfo = {};
+            depmentTermInfo.companyCd = "comp_sample_01";
+            depmentTermInfo.departmentSetCd = "comp_sample_01";
+            depmentTermInfo.departmentCd = "dept_sample_20";
+            depmentTermInfo.deleteFlag = false;
+            depmentTermInfo.post = "ps002,ps003";                              // 职务Code（如果需要设定的话）
+            depmentTermInfo.departmentMain = false;                          // 是否主所属
+            depmentTermInfo.created = true;                                         // 是否是新追加所属部门 
+            depmentTermsInfo.push(depmentTermInfo);
+            
+          return data;
+        }
+        
+        // 设定检索用户列表参数
+        function setSearchInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 设定检索条件
+            var model = data.model;
+            model.companyCd = "";                       // 如果要按用户所属公司Cd进行检索时设置
+            model.attachmentNameCd = "";          // 如果要按用户所属部门Cd进行检索时设置
+            model.attachmentName = "";              // 如果要按用户所属部门名称进行检索时设置
+            model.searchbelow = true;                  // 按所属部门检索时是否要检索指定部门下级的子部门
+            model.keyword = "";                           // 按用户Cd或用户名关键字进行检索是设置
+            
+            // 设定检索分页和排序条件
+            data.start = 1;                                     // 检索起始记录行
+            data.count = 10;                                   // 一个分页行数（返回几行记录）, 设定0的话返回所有行
+            data.sortTarget = "code";                    // 排序关键字， code：按用户Cd进行排序, displayName：按用户名进行排序
+            data.sortDirection = "";                        // 排序顺序，
+          return data;
+        }
+
+        function setSetUserInfo(data) {
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 设定用户Code
+            var parameters = data.parameters;
+            parameters.recordInfo.userCd = "user001";
+            /// 更新对象期间ID（获得用户信息时可以取得该ID）
+            parameters.term.termCd = editTargetUserData["jp.co.intra_mart.master.user.detail.profileAttach"].termCd;
+            
+            var main = data.modelInfo["jp.co.intra_mart.master.user.detail.main"];
+            main.userCd = "user001";
+            
+            // 设定用户基本信息（和多语言无关的部分）
+            var profileAttach = data.modelInfo["jp.co.intra_mart.master.user.detail.profileAttach"];
+            profileAttach.sex = "1";
+            
+            // 设定用户基本信息（和多语言（中文）有关的部分）
+            var localedata = profileAttach.localedata.zh_CN;
+            localedata.userName = "用户001-编辑";
+            localedata.userSearchName = "用户001-编辑";
+            localedata.zipCode = "200010-1";
+            localedata.address1 = "address1-编辑";
+            localedata.address2 = "address2-编辑";
+            localedata.address3 = "address3-编辑";
+            localedata.telephoneNumber = "68881234-1";
+            localedata.extensionNumber = "001-1";
+            localedata.faxNumber = "68881235-1";
+            localedata.extensionFaxNumber = "002-1";
+            localedata.mobileNumber = "13816800001-1";
+            localedata.emailAddress1 = "test1-1@test.com";
+            localedata.emailAddress2 = "test3-1@test.com";
+            localedata.mobileEmailAddress = "test3-1@test.com";
+            localedata.url = "http://url-1";
+            localedata.notes = "备注-编辑";
+            
+            // 设定用户账号信息
+            var accountAttach = data.modelInfo["jp.co.intra_mart.master.user.detail.accountAttach"];
+            accountAttach.password = "8888";
+            accountAttach.confirmPassword = "8888";
+            // 保留未修改的内容
+            var orgAccountAttach = editTargetUserData["jp.co.intra_mart.master.user.detail.accountAttach"];
+            accountAttach.license = orgAccountAttach.license;
+            accountAttach.validStartDate = orgAccountAttach.validStartDate ;
+            accountAttach.validEndDate = orgAccountAttach.validEndDate ;
+            accountAttach.timezone = orgAccountAttach.timezone ;
+            accountAttach.firstDayOfWeek = orgAccountAttach.firstDayOfWeek ;
+            accountAttach.calendarId = orgAccountAttach.calendarId ;
+            accountAttach.datetimeFormat = orgAccountAttach.datetimeFormat ;
+            accountAttach.dateFormatStandard = orgAccountAttach.dateFormatStandard ;
+            accountAttach.dateFormatSimple = orgAccountAttach.dateFormatSimple ;
+            accountAttach.timeFormatTimestamp = orgAccountAttach.timeFormatTimestamp ;
+            accountAttach.timeFormatStandard = orgAccountAttach.timeFormatStandard ;
+            accountAttach.datetimeLocale = orgAccountAttach.datetimeLocale ;
+            accountAttach.firstLogin = orgAccountAttach.firstLogin ;
+            accountAttach.accountLock = orgAccountAttach.accountLock ;
+            accountAttach.loginFailureCount = orgAccountAttach.loginFailureCount ;
+            accountAttach.pagePatternId = orgAccountAttach.pagePatternId ;
+            accountAttach.notes = orgAccountAttach.notes ;
+            accountAttach.imgUrl = orgAccountAttach.imgUrl ;
+            accountAttach.decimalFormat = orgAccountAttach.decimalFormat ;
+
+            // 设定用户账号身份信息
+            var roleTermsInfo = data.modelInfo["jp.co.intra_mart.master.user.detail.roleAttach"].roleTermsInfo;
+            var roleTermInfo = null;
+            // 编辑用户信息时要修改的身份信息
+            roleTermInfo = {};
+            roleTermInfo.roleId = "im_workflow_user";
+            roleTermInfo.startDate = "2017/01/01 00:00:00";
+            roleTermInfo.endDate = "2017/12/31 00:00:00";
+            roleTermsInfo.push(roleTermInfo);
+            // 编辑用户信息时追加身份信息
+            roleTermInfo = {};
+            roleTermInfo.roleId = "portal_manager";
+            roleTermInfo.created = true;                                                 // 是否是新追加身份 
+            roleTermInfo.startDate = "1900/01/01 00:00:00";
+            roleTermInfo.endDate = "3000/01/01 00:00:00";
+            roleTermsInfo.push(roleTermInfo);
+            // 编辑用户信息时要删除的身份信息
+            var removedRoleParents = data.modelInfo["jp.co.intra_mart.master.user.detail.roleAttach"].removedRoleParents;
+            roleTermInfo = {};
+            roleTermInfo.roleId = "tenant_manager";
+            removedRoleParents.push(roleTermInfo);
+            
+            // 设定用户所属部门组织信息
+            var depmentTermsInfo = data.modelInfo["jp.co.intra_mart.master.user.detail.departmentAttach"].termsInfo;
+            var depmentTermInfo = null;
+            // 编辑用户信息时要修改的所属部门信息
+            depmentTermInfo = {};
+            depmentTermInfo.companyCd = "comp_sample_01";
+            depmentTermInfo.departmentSetCd = "comp_sample_01";
+            depmentTermInfo.departmentCd = "dept_sample_10";
+            depmentTermInfo.deleteFlag = false;
+            depmentTermInfo.post = "ps002";                                        // 职务Code（如果需要设定的话）
+            depmentTermInfo.departmentMain = true;                           // 是否主所属
+            depmentTermsInfo.push(depmentTermInfo);
+           // 编辑用户信息时追加所属部门信息
+            depmentTermInfo = {};
+            depmentTermInfo.id = "NEW_" + "001";
+            depmentTermInfo.companyCd = "comp_sample_01";
+            depmentTermInfo.departmentSetCd = "comp_sample_01";
+            depmentTermInfo.departmentCd = "dept_sample_21";
+            depmentTermInfo.deleteFlag = false;
+            depmentTermInfo.post = "ps003";                                        // 职务Code（如果需要设定的话）
+            depmentTermInfo.departmentMain = false;                           // 是否主所属
+            depmentTermInfo.created = true;                                        // 是否是新追加所属部门 
+            depmentTermsInfo.push(depmentTermInfo);
+            // 编辑用户信息时要删除的所属部门信息
+            var removedParents = data.modelInfo["jp.co.intra_mart.master.user.detail.departmentAttach"].removedParents;
+            depmentTermInfo = {};
+            depmentTermInfo.companyCd = "comp_sample_01";
+            depmentTermInfo.departmentSetCd = "comp_sample_01";
+            depmentTermInfo.departmentCd = "dept_sample_20";
+            removedParents.push(depmentTermInfo);
+            
+            return data;
+         }
+        
+        function setGetUserInfo(data) {
+            
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 根据用户的UserCd取得用户信息
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.userCd = "user001";
+            
+           return data;
+         }
+
+        function setRemoveInfo(data) {
+           // 设定用户Code
+           var parameters = data.parameters;
+           parameters.recordInfo.userCd = "user001";
+           
+           var main = data.modelInfo["jp.co.intra_mart.master.user.detail.main"];
+           main.userCd = "user001";
+           
+          return data;
+        }
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="search">检索用户列表</button>
+    <button type="button" id="addUser">登记用户</button>
+    <button type="button" id="getUser">获得用户信息</button>
+    <button type="button" id="setUser">更新用户信息</button>
+    <button type="button" id="remove">删除用户信息</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

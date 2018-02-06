@@ -1,0 +1,60 @@
+{
+    "companyCd": "",
+    "sortKey": "0",
+    "locales": {
+        "zh_CN": {
+            "departmentName": "",
+            "departmentShortName": "",
+            "departmentSearchName": "",
+            "countryCd": "",
+            "zipCode": "",
+            "address1": "",
+            "address2": "",
+            "address3": "",
+            "telephoneNumber": "",
+            "extensionNumber": "",
+            "faxNumber": "",
+            "extensionFaxNumber": "",
+            "emailAddress1": "",
+            "emailAddress2": "",
+            "url": "",
+            "notes": ""
+        },
+        "en": {
+            "departmentName": "",
+            "departmentShortName": "",
+            "departmentSearchName": "",
+            "countryCd": "",
+            "zipCode": "",
+            "address1": "",
+            "address2": "",
+            "address3": "",
+            "telephoneNumber": "",
+            "extensionNumber": "",
+            "faxNumber": "",
+            "extensionFaxNumber": "",
+            "emailAddress1": "",
+            "emailAddress2": "",
+            "url": "",
+            "notes": ""
+        },
+        "ja": {
+            "departmentName": "",
+            "departmentShortName": "",
+            "departmentSearchName": "",
+            "countryCd": "",
+            "zipCode": "",
+            "address1": "",
+            "address2": "",
+            "address3": "",
+            "telephoneNumber": "",
+            "extensionNumber": "",
+            "faxNumber": "",
+            "extensionFaxNumber": "",
+            "emailAddress1": "",
+            "emailAddress2": "",
+            "url": "",
+            "notes": ""
+        }
+    }
+}

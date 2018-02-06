@@ -1,0 +1,31 @@
+{
+    "extension": {
+        "imwCallOriginalParams": {
+            "cplProcListParams": {
+                "count": 15,
+                "offset": 0,
+                "orderByList": [
+                    {
+                        "sortOrder": "",
+                        "columnName": "listPageCol_MatterNumber",
+                        "sortType": "DESC",
+                        "columnClassify": "0"
+                    }
+                ],
+                "applyFlg": "1",
+                "approveFlg": "1",
+                "applyTargetActFlg": "1",
+                "approveTargetActFlg": "1",
+                "applySelfActFlg": "1",
+                "approveSelfActFlg": "1",
+                "applyOriginalActFlg": "1",
+                "approveOriginalActFlg": "1"
+            },
+            "listPageType": "3"
+        }
+    },
+    "sortIndex": "listPageCol_MatterNumber",
+    "rowNum": 15,
+    "sortOrder": "desc",
+    "page": 1
+}

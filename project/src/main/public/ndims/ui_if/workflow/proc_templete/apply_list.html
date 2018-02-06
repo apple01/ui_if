@@ -1,0 +1,47 @@
+<!-- ndims proc_templete start -->
+
+<form id="applyForm" name="applyForm" method="post" action="im_workflow/common/switch/switch_content">
+    <INPUT type="hidden" name="imwCallOriginalParams" value=""><INPUT type="hidden" name="imwPageType" value=""><INPUT type="hidden" name="imwAuthUserCode" value=""><INPUT type="hidden" name="imwApplyBaseDate" value=""><INPUT type="hidden" name="imwFlowId" value=""><INPUT type="hidden" name="imwNodeId" value=""><INPUT type="hidden" name="imwUserDataId" value="">
+</form>
+<form id="flowForm" name="flowForm" method="post" target="IMW_FLOW" action="im_workflow/common/unit/flow/flow">
+    <INPUT type="hidden" name="imwFlowId" value=""><INPUT type="hidden" name="imwApplyBaseDate" value="">
+</form>
+<script type="text/javascript">
+    var GB_ROOT_DIR = "workflow/csjs/greybox/";
+    var GB_form = 0;
+    var ndims_work_param = null;
+    
+    function onClickFlow(flowId, param) {
+        document.flowForm.imwFlowId.value = flowId;
+        document.flowForm.imwApplyBaseDate.value = param.extension.imwCallOriginalParams.applyListParams.applyBaseDate;
+        openPopupWindowFlow(document.flowForm);
+      }
+    function onClickApplyFlow(flowId, nodeId, param) {
+        document.applyForm.imwPageType.value = param.extension.imwCallOriginalParams.listPageType;
+        document.applyForm.imwCallOriginalParams.value = encodeURI(JSON.stringify(param.extension.imwCallOriginalParams));
+        document.applyForm.imwFlowId.value = flowId;
+        document.applyForm.imwNodeId.value = nodeId;
+        document.applyForm.imwAuthUserCode.value = param.extension.imwCallOriginalParams.applyListParams.applyUserCd;
+        document.applyForm.imwApplyBaseDate.value = param.extension.imwCallOriginalParams.applyListParams.applyBaseDate;
+        document.applyForm.submit();
+      }
+    
+    function openPopupWindowFlow(form) {
+        var wnd = window.open('', form.target, 'status=yes,resizable=yes,scrollbars=yes,height=700,width=750');
+        wnd.focus();
+        form.submit();
+    }
+    
+</script>
+
+<script type="text/javascript" src="workflow/csjs/common.js"></script>
+<script type="text/javascript" src="workflow/csjs/workflow_open_page.js"></script>
+<script type="text/javascript"
+  src="workflow/csjs/workflow_open_page_matter_detail.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS_fx.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/gb_scripts.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox.js"></script>
+<link type="text/css" rel="stylesheet" href="workflow/csjs/greybox/gb_styles.css">
+
+<!-- ndims proc_templete end -->

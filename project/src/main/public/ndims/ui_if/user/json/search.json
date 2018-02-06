@@ -1,0 +1,26 @@
+{
+    "extensionPoint": "jp.co.intra_mart.foundation.master.setting.user.search.criteria",
+    "pluginId": "jp.co.intra_mart.master.user.criteria.main",
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.user.search",
+        "baseDate": "",
+        "localeId": "zh_CN"
+    },
+    "model": {
+        "target": "department",
+        "attachmentName": "",
+        "attachmentNameCd": "",
+        "attachmentNameSetCd": "",
+        "companyCd": "",
+        "searchbelow": true,
+        "keyword": "",
+        "code": true,
+        "userName": true,
+        "userSearchName": true,
+        "ignore": true
+    },
+    "start": 1,
+    "count": 0,
+    "sortTarget": "code",
+    "sortDirection": "asc"
+}

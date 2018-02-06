@@ -1,0 +1,424 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+            
+        	// 检索公司直属部门信息
+          $("#searchCompanyDep").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/searchcompanydep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchCompanyDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/searchcompanydep";
+                callAjax(url, data);
+              });
+          });
+          // 检索部门下属子部门信息
+          $("#searchSubDep").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/searchsubdep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchSubDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/searchsubdep";
+                callAjax(url, data);
+              });
+          });
+          // 新建部门信息
+          $("#addDep").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/adddep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/adddep";
+                callAjax(url, data);
+              });
+          });
+          // 获得部门详细信息
+          $("#getDep").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/getdep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/getdep";
+                callAjax(url, data);
+              });
+          });
+
+          // 更新部门信息
+          $("#setDep").click(function() {
+              if (editTargetData == null) {
+                alert("更新对象信息之前请新增或获得编辑对象的信息。");
+                return;
+              }
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/setdep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/setdep";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除部门信息
+          $("#removeDep").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/removedep.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveDepInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/removedep";
+                callAjax(url, data);
+              });
+          });
+          
+          // 检索部门所属用户信息
+          $("#searchDepUser").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/searchdepuser.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchDepUserInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/searchdepuser";
+                callAjax(url, data);
+              });
+          });
+          
+          // 在部门中追加员工
+          $("#joinDepUsers").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/joinusers.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setJoinUsersInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/joinusers";
+                callAjax(url, data);
+              });
+          });
+
+          // 在部门中去除员工
+          $("#detachUser").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/department/json/detachuser.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setDetachUserInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/department/detachuser";
+                callAjax(url, data);
+              });
+          });
+          
+        });
+    </script>
+
+  <script type="text/javascript">
+        var editTargetData = null;
+  
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        if (result.data) {
+                        	// 为了测试编辑处理，暂存编辑对象的数据
+                        	editTargetData = result.data;
+                        }
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+
+        // IF参数设定：检索公司直属部门信息
+        function setSearchCompanyDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 获取以下公司的直属部门信息（仅取得直属一级）
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd，取得该公司的的直属部门信息（仅取得直属一级）
+            
+          return data;
+        }
+
+        // IF参数设定：检索部门下属子部门信息
+        function setSearchSubDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            basicInfo.companyCd = "comp_sample_01";   // 公司ID
+            
+            // 获取以下部门的子部门信息（仅取得下属一级）
+            data.composite.companyCd = basicInfo.companyCd;
+            data.composite.departmentSetCd = basicInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            data.composite.departmentCd = "dept_sample_10";             // 部门Cd，取得该部门的下属子部门信息（仅取得下属一级）
+            
+          return data;
+        }
+
+        // IF参数设定：新建部门信息
+        function setAddDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（新建哪个公司的部门）
+            
+            var main = data.model["jp.co.intra_mart.master.company.detail.main"];
+            main.companyCd = basicInfo.companyCd;
+            main.departmentCd = "dep001"; // 自主发行唯一的Cd
+            main.sortKey = "0";       // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            var localedata = main.localedata.zh_CN;
+            localedata.departmentName = "样例测试部门01";
+            localedata.departmentShortName = "样例测试部门01";
+            localedata.departmentSearchName = "样例测试部门01";
+            localedata.countryCd = "";
+            localedata.zipCode = "";
+            localedata.address1 = "";
+            localedata.address2 = "";
+            localedata.address3 = "";
+            localedata.telephoneNumber = "";
+            localedata.extensionNumber = "";
+            localedata.faxNumber = "";
+            localedata.extensionFaxNumber = "";
+            localedata.emailAddress1 = "";
+            localedata.emailAddress2 = "";
+            localedata.url = "";
+            localedata.notes = "";
+            
+            // 新建部门的父部门信息
+            var parentInfo = data.parameters.parentInfo;
+            parentInfo.companyCd = basicInfo.companyCd;
+            parentInfo.departmentSetCd = basicInfo.companyCd;
+            parentInfo.departmentCd = "dept_sample_10";
+            // 如果要在公司下建立直属部门的话，departmentCd设置成和公司Cd一致。
+            // parentInfo.departmentCd = basicInfo.companyCd;
+            
+          return data;
+        }
+        
+        // IF参数设定：获得部门详细信息
+        function setGetDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            
+            // 获得信息对象的部门Cd信息
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyCd = basicInfo.companyCd;
+            recordInfo.departmentSetCd = basicInfo.companyCd;
+            recordInfo.departmentCd = "dep001";
+
+          return data;
+        }
+
+        // IF参数设定：更新部门详细信息
+        function setSetDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            
+            // 更新对象部门的Key信息
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyCd = basicInfo.companyCd;
+            recordInfo.departmentSetCd = basicInfo.companyCd;
+            recordInfo.departmentCd = "dep001";  // 更新对象部门Cd
+            // 更新对象期间ID（获得用户信息时可以取得该ID）
+            var term = data.parameters.term;
+            term.termCd = editTargetData["jp.co.intra_mart.master.company.detail.main"].termCd;
+            
+            var main = data.model["jp.co.intra_mart.master.company.detail.main"];
+            main.companyCd = basicInfo.companyCd;
+            main.departmentSetCd = basicInfo.companyCd;
+            main.departmentCd = "dep001";  // 更新对象部门Cd
+            main.sortKey = "0";       // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 更新内容
+            var localedata = main.localedata.zh_CN;
+            localedata.departmentName = "样例测试部门01-编辑";
+            localedata.departmentShortName = "样例测试部门01-编辑";
+            localedata.departmentSearchName = "样例测试部门01-编辑";
+            localedata.countryCd = "countryCd";
+            localedata.zipCode = "zipCode";
+            localedata.address1 = "address1";
+            localedata.address2 = "address2";
+            localedata.address3 = "address3";
+            localedata.telephoneNumber = "123";
+            localedata.extensionNumber = "456";
+            localedata.faxNumber = "789";
+            localedata.extensionFaxNumber = "001";
+            localedata.emailAddress1 = "test1@test.com";
+            localedata.emailAddress2 = "test2@test.com";
+            localedata.url = "http://url";
+            localedata.notes = "notes";
+            
+            // 仅在希望改变部门的父部门时更新一下信息
+            // var parentInfo = {};
+            // data.parameters.parentInfo =parentInfo;
+            // parentInfo.companyCd = basicInfo.companyCd;
+            // parentInfo.departmentSetCd = basicInfo.companyCd;
+            // parentInfo.departmentCd = "dept_sample_20"; // 父部门Cd1
+            // 如果要在公司下建立直属部门的话，departmentCd设置成和公司Cd一致。
+            // parentInfo.departmentCd = basicInfo.companyCd;
+            
+          return data;
+        }
+
+        // IF参数设定：删除部门信息
+        function setRemoveDepInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            // 删除对象部门Key信息
+            var main = data.model["jp.co.intra_mart.master.company.detail.main"];
+            main.companyCd = basicInfo.companyCd;
+            main.departmentSetCd = basicInfo.companyCd;
+            main.departmentCd = "dep001"; //删除对象部门Cd
+
+          return data;
+        }
+        
+        // IF参数设定：检索部门所属用户信息
+        function setSearchDepUserInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            // 删除对象部门Key信息
+            var composite = data.composite;
+            composite.companyCd = basicInfo.companyCd;
+            composite.departmentSetCd = basicInfo.companyCd;
+            composite.departmentCd = "dep001"; //检索对象部门Cd
+
+            // 设定检索分页和排序条件
+            data.start = 1;                                     // 检索起始记录行
+            data.count = 10;                                   // 一个分页行数（返回几行记录）, 设定0的话返回所有行
+            data.sortTarget = "code";                    // 排序关键字， code：按用户Cd进行排序, displayName：按用户名进行排序
+            data.sortDirection = "";                        // 排序顺序，
+            
+          return data;
+        }
+        
+        // IF参数设定：在部门中追加员工
+        function setJoinUsersInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            // 要追加用户的部门信息
+            var parent = data.parent;
+            parent.companyCd = basicInfo.companyCd;
+            parent.departmentSetCd = basicInfo.companyCd;
+            parent.departmentCd = "dep001"; 
+            
+            // 要追加的用户信息
+            var children = data.children;
+            children.push({ "userCd" : "aoyagi"});
+            children.push({ "userCd" : "ueda"});
+          
+          return data;
+        }
+        
+        // IF参数设定：在部门中去除员工
+        function setDetachUserInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd
+            // 要去除用户的部门信息
+            var parent = data.parentInfo;
+            parent.companyCd = basicInfo.companyCd;
+            parent.departmentSetCd = basicInfo.companyCd;
+            parent.departmentCd = "dep001"; 
+            
+            // 要去除的用户信息
+            var recordInfo = data.recordInfo;
+            recordInfo.userCd = "aoyagi";
+            
+          return data;
+        }
+        
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="searchCompanyDep">检索公司直属部门信息</button>
+    <button type="button" id="searchSubDep">检索部门下属子部门信息</button>
+    <button type="button" id="addDep">新建部门</button>
+    <button type="button" id="getDep">获得部门详细信息</button>
+    <button type="button" id="setDep">更新部门信息</button>
+    <button type="button" id="removeDep">删除部门信息</button>
+    
+    <button type="button" id="searchDepUser">检索部门所属员工</button>
+    <button type="button" id="joinDepUsers">在部门中追加员工</button>
+    <button type="button" id="detachUser">在部门中去除员工</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<certification-config xmlns="http://www.intra-mart.jp/certification/certification-config"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.intra-mart.jp/certification/certification-config certification-config.xsd">
+
+  <!-- セッション情報管理で使用する設定 -->
+  <category name="im_session">
+    <!-- セッション管理情報を保存するクッキー名
+    <param>
+      <param-name>cookie_name</param-name>
+      <param-value>jp.co.intra_mart.session.cookie</param-value>
+    </param>
+     -->
+
+    <!-- セッション情報チェックの対象外とするURL(複数ある場合は「param-name=validate_url」で複数設定) -->
+    <!-- 
+    <param>
+      <param-name>validate_url</param-name>
+      <param-value>/ndims/ui_if/cert</param-value>
+    </param>
+	 -->
+	 
+    <!-- セッション情報チェックの対象外とする正規表現URL(複数ある場合は「param-name=validate_regex_url」で複数設定) -->
+    <param>
+      <param-name>validate_regex_url</param-name>
+      <param-value>/ndims/ui_if/.*</param-value>
+    </param>
+     
+  </category>
+
+  <!-- 認証ページへの遷移で使用する設定 -->
+  <category name="im_login">
+    <!-- ログインページURL -->
+    <param>
+      <param-name>url</param-name>
+      <param-value>/ndims/ui_if/cert/login</param-value>
+    </param>
+    <!-- ユーザIDのCookie保存有無 -->
+    <param>
+      <param-name>enable_cookie_store</param-name>
+      <param-value>true</param-value>
+    </param>
+    <!-- リクエストパラメータによる画面遷移サポートの有無
+    <param>
+      <param-name>enable_requested_target_url</param-name>
+      <param-value>false</param-value>
+    </param>
+     -->
+  </category>
+
+  <!-- ログアウトで使用する設定 -->
+  <category name="im_logout">
+    <!-- ログアウト実行URL -->
+    <param>
+      <param-name>url</param-name>
+      <param-value>/ndims/ui_if/cert/logout</param-value>
+    </param>
+    <!-- リクエストパラメータによる画面遷移サポートの有無
+    <param>
+      <param-name>enable_requested_target_url</param-name>
+      <param-value>false</param-value>
+    </param>
+     -->
+  </category>
+  
+</certification-config>

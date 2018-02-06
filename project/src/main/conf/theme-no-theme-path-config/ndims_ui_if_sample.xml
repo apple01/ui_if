@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme-no-theme-path-config
+	xmlns="http://www.intra-mart.jp/theme/theme-no-theme-path-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.intra-mart.jp/theme/theme-no-theme-path-config theme-no-theme-path-config.xsd ">
+	
+	<path regex="true" >/ndims/ui_if/company/.*</path>
+	<path regex="true" >/ndims/ui_if/companygroup/.*</path>
+	<path regex="true" >/ndims/ui_if/department/.*</path>
+	<path regex="true" >/ndims/ui_if/notice/.*</path>
+	<path regex="true" >/ndims/ui_if/post/.*</path>
+	<path regex="true" >/ndims/ui_if/role/.*</path>
+	<path regex="true" >/ndims/ui_if/user/.*</path>
+  	<path regex="true" >/ndims/ui_if/workflow/.*</path>
+  	
+</theme-no-theme-path-config>

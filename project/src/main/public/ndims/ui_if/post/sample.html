@@ -1,0 +1,278 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+          // 检索职务信息
+          $("#searchPost").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/post/json/searchpost.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchPostInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/post/searchpost";
+                callAjax(url, data);
+              });
+          });
+
+          // 新增职务
+          $("#addPost").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/post/json/addpost.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddPostInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/post/addpost";
+                callAjax(url, data);
+              });
+          });
+          
+          // 获得职务信息
+          $("#getPost").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/post/json/getpost.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetPostInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/post/getpost";
+                callAjax(url, data);
+              });
+          });
+
+          // 编辑职务信息
+          $("#setPost").click(function() {
+            
+              if (editTargetData == null) {
+                alert("更新职务信息之前请新增或获得编辑对象的职务信息。");
+                return;
+              }
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/post/json/setpost.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetPostInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/post/setpost";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除职务信息
+          $("#removePost").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/post/json/removepost.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemovePostInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/post/removepost";
+                callAjax(url, data);
+              });
+          });
+        });
+        
+        var editTargetData = null; 
+
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        if (result.data) {
+                          // 为了测试编辑处理，暂存编辑对象的数据
+                          editTargetData = result.data;
+                        }
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        
+        // IF参数设定：检索职务列表
+        function setSearchPostInfo(data) {
+            
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 检索哪个公司下的职务信息
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（检索哪个公司的职务信息）
+            data.composite.companyCd = basicInfo.companyCd;
+            data.composite.departmentSetCd = basicInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            // 如需检索个部门的职务信息追加以下条件
+            // data.composite.departmentCd = "dept_sample_10";             // 部门Cd，检索该部门的职务信息
+            
+            // 设定检索分页和排序条件
+            data.start = 1;                                     // 检索起始记录行
+            data.count = 10;                                   // 一个分页行数（返回几行记录）, 设定0的话返回所有行
+            data.sortTarget = "code";                    // 排序关键字， code：按用户Cd进行排序, displayName：按用户名进行排序
+            data.sortDirection = "";                        // 排序顺序，
+            
+          return data;
+        }
+        
+        // IF参数设定：新增职务
+        function setAddPostInfo(data) {
+            // 设定基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（指定为哪个公司的职务信息）
+            
+            var main = data.model["jp.co.intra_mart.master.post.detail.main"];
+            // 设定职务基本信息（和多语言无关的部分） 
+            main.postCd = "test_post_001";   // 自主发行唯一的Cd
+            main.companyCd = basicInfo.companyCd;
+            main.departmentSetCd = basicInfo.companyCd;
+            main.rank = "0";        // 等级，如无特殊需求默认设置为0;
+            main.sortKey = "0";   // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定职务基本信息（和多语言（中文）有关的部分） 
+            var localedata = main.localedata.zh_CN;
+            localedata.postName = "总经理";
+            localedata.notes = "样例测试职务01";
+            
+            // 设定职务所属公司、部门信息
+            var parentInfo = data.parameters.parentInfo;
+            parentInfo.companyCd = basicInfo.companyCd;
+            parentInfo.departmentSetCd = basicInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            // 如需关联个别部门的职务信息追加以下条件
+            // parentInfo.departmentCd = "dept_sample_10";             // 部门Cd
+            
+            return data;
+        }
+        
+        // IF参数设定：获得职务相信信息
+        function setGetPostInfo(data) {
+            // 设定基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（指定为哪个公司的职务信息）
+            
+            // 获得对象Key信息设定
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyCd = basicInfo.companyCd;
+            recordInfo.departmentSetCd = basicInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            recordInfo.postCd = "test_post_001";  // 职务Code
+            
+            return data;
+         }
+
+        //  IF参数设定：更新职务信息
+        function setSetPostInfo(data) {
+            // 设定基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（指定为哪个公司的职务信息）
+            
+            // 编辑对象Key信息设定
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyCd = basicInfo.companyCd;
+            recordInfo.departmentSetCd = basicInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            recordInfo.postCd = "test_post_001";  // 职务Code
+            // 更新对象期间ID（获得用户信息时可以取得该ID）
+            var term = data.parameters.term;
+            term.termCd =editTargetData["jp.co.intra_mart.master.post.detail.main"].termCd;
+
+            // 编辑更新信息
+            var main = data.model["jp.co.intra_mart.master.post.detail.main"];
+            // 设定职务基本信息（和多语言无关的部分） 
+            main.postCd = recordInfo.postCd;   // 自主发行唯一的Cd
+            main.companyCd = recordInfo.companyCd;
+            main.departmentSetCd = recordInfo.companyCd;
+            main.rank = "1";        // 等级，如无特殊需求默认设置为0;
+            main.sortKey = "1";   // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定职务基本信息（和多语言（中文）有关的部分） 
+            var localedata = main.localedata.zh_CN;
+            localedata.postName = "副总经理";
+            localedata.notes = "样例测试职务01-编辑";
+            
+            // 设定职务所属公司、部门信息
+            var parentInfo = data.parameters.parentInfo;
+            parentInfo.companyCd = recordInfo.companyCd;
+            parentInfo.departmentSetCd = recordInfo.companyCd;   // departmentSetCd默认和公司Cd一致
+            // 如需关联个别部门的职务信息追加以下条件
+            // parentInfo.departmentCd = "dept_sample_10";             // 部门Cd
+            
+            return data;
+         }
+
+        // IF参数设定：删除职务信息
+        function setRemovePostInfo(data) {
+            // 设定基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            basicInfo.companyCd = "comp_sample_01";   // 公司Cd（指定为哪个公司的职务信息）
+            
+            // 对象Key信息设定
+            var main = data.model["jp.co.intra_mart.master.post.detail.main"];
+            main.companyCd = basicInfo.companyCd;
+            main.departmentSetCd = basicInfo.companyCd;
+            main.postCd = "test_post_001";   // 对象的职务Cd
+            
+            return data;
+        }
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="searchPost">检索职务列表</button>
+    <button type="button" id="addPost">登记职务</button>
+    <button type="button" id="getPost">获得职务信息</button>
+    <button type="button" id="setPost">更新职务信息</button>
+    <button type="button" id="removePost">删除职务信息</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

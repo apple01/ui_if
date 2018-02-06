@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<initializer-config
+	xmlns="http://intra-mart.co.jp/system/secure/product/initializer/config/initializer-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://intra-mart.co.jp/system/secure/product/initializer/config/initializer-config ../../../schema/initializer-config.xsd ">
+
+	<initializer>
+		<script-name>ndims/init</script-name>
+	</initializer>
+
+</initializer-config>

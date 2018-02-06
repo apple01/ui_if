@@ -1,0 +1,14 @@
+{
+    "extension" : {
+        "searchCondition" : {
+            "targetName" : true, 
+            "targetKana" : false, 
+            "targetCode" : true, 
+            "keyword" : ""
+        }
+    }, 
+    "rowNum" : 10, 
+    "page" : 1,
+    "sortIndex" : "companyCd",
+    "sortOrder" : "asc" 
+}

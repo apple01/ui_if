@@ -1,0 +1,70 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.company.detail",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "companyCd": "",
+        "companyName": "",
+        "isDisabled": true
+    },
+    "model": {
+        "jp.co.intra_mart.master.company.detail.main": {
+            "defaultLocale": "zh_CN",
+            "locale": "中文 (中国)",
+            "companyName": "",
+            "departmentCd": "",
+            "departmentSetCd": "",
+            "companyCd": "",
+            "sortKey": "0",
+            "localedata": {
+                "zh_CN": {
+                    "departmentName": "",
+                    "departmentShortName": "",
+                    "departmentSearchName": "",
+                    "countryCd": "",
+                    "zipCode": "",
+                    "address1": "",
+                    "address2": "",
+                    "address3": "",
+                    "telephoneNumber": "",
+                    "extensionNumber": "",
+                    "faxNumber": "",
+                    "extensionFaxNumber": "",
+                    "emailAddress1": "",
+                    "emailAddress2": "",
+                    "url": "",
+                    "notes": ""
+                }
+            },
+            "isUpdated": "false"
+        },
+        "jp.co.intra_mart.master.company.detail.attach": {
+            "termsInfo": [
+                
+            ],
+            "removedParents": [
+                
+            ]
+        }
+    },
+    "parameters": {
+        "isEdit": true,
+        "term": {
+            "termCd": "",
+            "startDate": "",
+            "endDate": "",
+            "deleteFlag": false
+        },
+        "parentInfo": null,
+        "recordInfo": {
+            "companyCd": "",
+            "departmentCd": "",
+            "departmentSetCd": "",
+            "displayName": "",
+            "description": ""
+        },
+        "parameter": {
+            "isEdit": "true"
+        }
+    }
+}

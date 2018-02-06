@@ -1,0 +1,276 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+        	// 检索申请一览列表
+          $("#apply_list").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/workflow/json/apply_list.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setInfo_apply_list(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/workflow/apply_list";
+                callAjax(url, data);
+              });
+          });
+
+          // 检索申请（临时保存）一览列表
+          $("#temporary_save_list").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/workflow/json/temporary_save_list.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setInfo_temporary_save_list(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/workflow/temporary_save_list";
+                callAjax(url, data);
+              });
+          });
+          
+          // 检索未处理（待办）一览列表
+          $("#process_list").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/workflow/json/process_list.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setInfo_process_list(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/workflow/process_list";
+                callAjax(url, data);
+              });
+          });
+          
+          // 检索已处理（已办-总流程未完成）一览列表
+          $("#actv_proc_list").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/workflow/json/actv_proc_list.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setInfo_actv_proc_list(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/workflow/actv_proc_list";
+                callAjax(url, data);
+              });
+          });
+          // 检索已处理（已办-总流程已完成）一览列表
+          $("#cpl_proc_list").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/workflow/json/cpl_proc_list.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setInfo_cpl_proc_list(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/workflow/cpl_proc_list";
+                callAjax(url, data);
+              });
+          });
+          
+        });
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        
+        // 设定IF参数 : 检索申请一览列表
+        function setInfo_apply_list(data) {
+          var listParams = data.extension.imwCallOriginalParams.applyListParams;
+
+          // 设定基本信息
+          // actvProcListParams.applyUserCd = "omip";      // 申请人用户Cd(不设的话默认当前登录用户，如果希望用代理作为申请人的话设定代理的用户Cd)
+          var now = new Date();
+          var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+          listParams.applyBaseDate = strNow;  // 基准日（设置yyyy/mm/dd格式）
+          
+          // 设定可进行检索的条件（条件为空的话检索全部）
+          listParams.listPageCol_FlowName = "";                 // 支持流程名称检索
+          listParams.listPageCol_FlowVersionNote = "";       // 支持流程版本检索
+          
+          // 设定分页信息
+          listParams.count = 15;            // 每页记录行数
+          listParams.offset = 0;              // 跳转到第几页（第一页从0开始）
+          listParams.currentPage = 1;    // 当前页
+          
+          // 设定排序信息
+          var orderByList = listParams.orderByList;
+          orderByList.columnName = "listPageCol_FlowName";    // 可以进行排序的字段名参考检索条件
+          orderByList.sortType = "ASC";
+          
+          return data;
+        }
+
+        // 设定IF参数 : 检索申请（临时保存）一览列表
+        function setInfo_temporary_save_list(data) {
+          var listParams = data.extension.imwCallOriginalParams.temporarySaveListParams;
+
+          // 设定基本信息
+          // actvProcListParams.applyUserCd = "omip";      // 申请人用户Cd(不设的话默认当前登录用户，如果希望用代理作为申请人的话设定代理的用户Cd)
+          var now = new Date();
+          var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+          listParams.applyBaseDate = strNow;  // 基准日（设置yyyy/mm/dd格式）
+          
+          // 设定可进行检索的条件（条件为空的话检索全部）
+          listParams.listPageCol_FlowName = "";
+          listParams.listPageCol_BaseDate = "";
+          listParams.listPageCol_ApplyUser = "";
+          listParams.listPageCol_MatterName = "";
+          listParams.listPageCol_TemporarySaveComment = "";
+        	  
+          // 设定分页信息
+          listParams.count = 15;            // 每页记录行数
+          listParams.offset = 0;              // 跳转到第几页（第一页从0开始）
+          listParams.currentPage = 1;    // 当前页
+          
+          // 设定排序信息
+          var orderByList = listParams.orderByList;
+          orderByList.columnName = "listPageCol_FlowName";    // 可以进行排序的字段名参考检索条件
+          orderByList.sortType = "ASC";
+
+          return data;
+        }
+        
+        // 设定IF参数 : 检索未处理（待办）一览列表
+        function setInfo_process_list(data) {
+          var listParams = data.extension.imwCallOriginalParams.unprocListParams;
+
+          // 设定可进行检索的条件（条件为空的话检索全部）
+          listParams.listPageCol_Priority = "";
+          listParams.listPageCol_MatterNumber = "";
+          listParams.listPageCol_MatterName = "";
+          listParams.listPageCol_BaseDateFrom = "";
+          listParams.listPageCol_BaseDateTo = "";
+          listParams.listPageCol_ApplyDateFrom = "";
+          listParams.listPageCol_ApplyDateTo = "";
+          listParams.listPageCol_ApplyUser = "";
+          listParams.listPageCol_ApplyUserName = "";
+          listParams.listPageCol_FlowName = "";
+          listParams.listPageCol_NodeName = "";
+          listParams.listPageCol_Status = "";
+          listParams.listPageCol_ArriveDateFrom = "";
+          listParams.listPageCol_ArriveDateTo = "";
+          listParams.listPageCol_ProcLimitTo = "";
+          
+          // 设定分页信息
+          listParams.count = 15;            // 每页记录行数
+          listParams.offset = 0;              // 跳转到第几页（第一页从0开始）
+          listParams.currentPage = 1;    // 当前页
+
+          // 设定排序信息
+          var orderByList = listParams.orderByList;
+          orderByList.columnName = "listPageCol_MatterNumber";  // 可以进行排序的字段名参考检索条件
+          orderByList.sortType = "ASC";
+          
+          return data;
+        }
+        
+        // 设定IF参数 : 检索已处理（已办-总流程未完成）一览列表
+        function setInfo_actv_proc_list(data) {
+          var listParams = data.extension.imwCallOriginalParams.actvProcListParams;
+
+          // 设定可进行检索的条件（条件为空的话检索全部）
+          listParams.listPageCol_Priority = "";
+          listParams.listPageCol_MatterNumber = "";
+          listParams.listPageCol_MatterName = "";
+          listParams.listPageCol_BaseDate = "";
+          listParams.listPageCol_ApplyDate = "";
+          listParams.listPageCol_ApplyUser = "";
+          listParams.listPageCol_FlowName = "";
+          listParams.listPageCol_FinalProcDate = "";
+        
+          // 设定分页信息
+          listParams.count = 15;            // 每页记录行数
+          listParams.offset = 0;              // 跳转到第几页（第一页从0开始）
+          listParams.currentPage = 1;    // 当前页
+
+          // 设定排序信息
+          var orderByList = listParams.orderByList;
+          orderByList.columnName = "listPageCol_MatterNumber";    // 可以进行排序的字段名参考检索条件
+          orderByList.sortType = "DESC";
+          
+          return data;
+        }
+        
+        // 设定IF参数 : 检索已处理（已办-总流程已完成）一览列表
+        function setInfo_cpl_proc_list(data) {
+          var listParams = data.extension.imwCallOriginalParams.cplProcListParams;
+
+          // 设定可进行检索的条件（条件为空的话检索全部）
+          listParams.listPageCol_Priority = "";
+          listParams.listPageCol_MatterNumber = "";
+          listParams.listPageCol_MatterName = "";
+          listParams.listPageCol_BaseDate = "";
+          listParams.listPageCol_ApplyDate = "";
+          listParams.listPageCol_ApplyUser = "";
+          listParams.listPageCol_FlowName = "";
+          listParams.listPageCol_EndDate = "";
+          listParams.listPageCol_EndStatus = "";
+          
+          // 设定分页信息
+          listParams.count = 15;            // 每页记录行数
+          listParams.offset = 0;              // 跳转到第几页（第一页从0开始）
+          listParams.currentPage = 1;    // 当前页
+          
+          // 设定排序信息
+          var orderByList = listParams.orderByList;
+          orderByList.columnName = "listPageCol_FlowName";    // 可以进行排序的字段名参考检索条件
+          orderByList.sortType = "ASC";
+          
+          return data;
+        }
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="apply_list">检索申请一览列表</button>
+    <button type="button" id="temporary_save_list">检索申请（临时保存）一览列表</button>
+    <button type="button" id="process_list">检索未处理（待办）一览列表</button>
+    <button type="button" id="actv_proc_list">检索已处理（已办-总流程未完成）一览列表</button>
+    <button type="button" id="cpl_proc_list">检索已处理（已办-总流程已完成）一览列表</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

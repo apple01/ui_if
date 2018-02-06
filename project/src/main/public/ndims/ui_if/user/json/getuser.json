@@ -1,0 +1,23 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.user.detail",
+        "baseDate": "",
+        "localeId": "zh_CN"
+    },
+    "model": {},
+    "parameters": {
+        "isEdit": true,
+        "term": {},
+        "parentInfo": null,
+        "recordInfo": {
+            "userCd": "",
+            "description": "",
+            "displayName": "",
+            "deleteFlag": false,
+            "code": ""
+        },
+        "parameter": {
+            "isEdit": "true"
+        }
+    }
+}

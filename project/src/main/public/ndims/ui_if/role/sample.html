@@ -1,0 +1,273 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+          // 检索身份信息
+          $("#searchRole").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/searchrole.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchRoleInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/searchrole";
+                callAjax(url, data);
+              });
+          });
+
+          // 新增身份
+          $("#addRole").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/addrole.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddRoleInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/addrole";
+                callAjax(url, data);
+              });
+          });
+          
+          // 获得身份信息
+          $("#getRole").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/getrole.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetRoleInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/getrole";
+                callAjax(url, data);
+              });
+          });
+
+          // 编辑身份信息
+          $("#setRole").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/setrole.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetRoleInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/setrole";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除身份信息
+          $("#removeRole").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/removerole.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveRoleInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/removerole";
+                callAjax(url, data);
+              });
+          });
+          
+          // 向身份中追加所属用户
+          $("#addRoleAccount").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/addroleaccount.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddRoleAccountInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/addroleaccount";
+                callAjax(url, data);
+              });
+          });
+          
+          // 向身份中编辑所属用户
+          $("#setRoleAccount").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/setroleaccount.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetRoleAccountInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/setroleaccount";
+                callAjax(url, data);
+              });
+          });
+          
+          // 向身份中删除所属用户
+          $("#removeRoleAccount").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/role/json/removeroleaccount.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveRoleAccountInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/role/removeroleaccount";
+                callAjax(url, data);
+              });
+          });
+          
+          
+        });
+        
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        
+        // IF参数设定：检索身份列表
+        function setSearchRoleInfo(data) {
+            
+            // 设定检索条件
+            var searchCondition = data.extension;
+            searchCondition.searchRoleName = "";                       // 身份名称检索关键字（为空的话是全部内容）
+            searchCondition.searchRoleCategory = "";                  // 身份分类检索关键字（为空的话是全部内容）
+            
+            // 设定检索分页和排序条件
+            data.rowNum = 100;                                     // 每页有多少行记录
+            data.page = 1;                                             // 返回第几页记录
+            data.sortIndex = "roleDisplayName";           // 排序字段 roleDisplayName，roleName，category
+            data.sortOrder = "asc";                               // 排序顺序
+            
+          return data;
+        }
+        
+        // IF参数设定：新增身份
+        function setAddRoleInfo(data) {
+        	
+            data.roleId = "test_role_001";          // 自主发行唯一的Cd
+            data.roleName = "test_role_001";    // 身份名，一般为英文名
+            data.roleDisplayName_zh_CN = "测试身份001",     // 身份显示名(中文)
+            data.roleDisplayNames = data.roleDisplayName_zh_CN +",,";      // 多语言显示名设定（仅中文的话使用该固定写法即可）
+            data.roleCategory = "test-category";
+            // data.subRoleIds = ", , ,";  // 如果需要加入既存的身份作为该身份的子身份的话，用","分割身份Id。
+            
+            return data;
+        }
+        
+        // IF参数设定：获得身份相信信息
+        function setGetRoleInfo(data) {
+            data.roleId = "test_role_001";
+            return data;
+         }
+
+        //  IF参数设定：更新身份信息
+        function setSetRoleInfo(data) {
+            // 更新对象RoleId设定
+            data.roleId = "test_role_001";
+            
+            // 设定更新内容
+            data.roleName = "test_role_001_edited";    // 身份名，一般为英文名
+            data.roleDisplayName_zh_CN = "测试身份001-编辑",     // 身份显示名(中文)
+            data.roleDisplayNames = data.roleDisplayName_zh_CN +",,";      // 多语言显示名设定（仅中文的话使用该固定写法即可）
+            data.roleCategory = "test-category-edited";
+            // data.subRoleIds = ", , ,";  // 如果需要加入既存的身份作为该身份的子身份的话，用","分割身份Id。
+            
+            return data;
+         }
+
+        // IF参数设定：删除身份信息
+        function setRemoveRoleInfo(data) {
+            data.roleId = "test_role_001";
+            return data;
+        }
+        
+        // IF参数设定：向身份中追加所属用户
+        function setAddRoleAccountInfo(data) {
+            // 对象身份
+            data.roleId = "test_role_001";
+            
+            // 向对象身份中追加的用户Cd
+            data.userCds.push("aoyagi");
+            data.userCds.push("ueda");
+            
+            return data;
+        }
+        
+        // IF参数设定：向身份中编辑所属用户
+        function setSetRoleAccountInfo(data) {
+           // 主要目的是编辑该用户所属身份的期间信息
+        
+            // 对象身份
+            data.roleId = "test_role_001";
+            
+            // 向对象身份中追加的用户Cd
+            data.userCds.push("aoyagi");
+            data.userCds.push("ueda");
+            
+            // 身份所属期间
+            data.startDate = "2017/01/01";
+            data.limitDate = "2017/12/31";
+            
+            return data;
+        }
+        
+        // IF参数设定：向身份中去除所属用户
+        function setRemoveRoleAccountInfo(data) {
+            // 对象身份
+            data.roleId = "test_role_001";
+            
+            // 向对象身份中去除的用户Cd
+            data.userCds.push("ueda");
+            
+            return data;
+        }
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="searchRole">检索身份列表</button>
+    <button type="button" id="addRole">登记身份</button>
+    <button type="button" id="getRole">获得身份信息</button>
+    <button type="button" id="setRole">更新身份信息</button>
+    <button type="button" id="removeRole">删除身份信息</button>
+    
+    <button type="button" id="addRoleAccount">向身份中追加所属用户</button>
+    <button type="button" id="setRoleAccount">向身份中编辑所属用户</button>
+    <button type="button" id="removeRoleAccount">向身份中去除所属用户</button>
+        
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

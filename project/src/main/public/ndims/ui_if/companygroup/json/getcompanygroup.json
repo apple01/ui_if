@@ -1,0 +1,29 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.companygroup.detail",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "companyCd": null,
+        "isDisabled": true
+    },
+    "model": {},
+    "parameters": {
+        "isEdit": true,
+        "term": {
+            "termCd": "",
+            "startDate": "",
+            "endDate": "",
+            "deleteFlag": false
+        },
+        "parentInfo": null,
+        "recordInfo": {
+            "companyGroupCd": "",
+            "companyGroupSetCd": "",
+            "displayName": "",
+            "description": ""
+        },
+        "parameter": {
+            "isEdit": "true"
+        }
+    }
+}

@@ -1,0 +1,227 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+        	// 检索公司信息
+          $("#searchCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/company/json/searchcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/company/searchcompany";
+                callAjax(url, data);
+              });
+          });
+
+        	// 新增公司
+          $("#addCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/company/json/addcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/company/addcompany";
+                callAjax(url, data);
+              });
+          });
+        	
+          // 获得公司信息
+          $("#getCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/company/json/getcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/company/getcompany";
+                callAjax(url, data);
+              });
+          });
+
+          // 编辑公司信息
+          $("#setCompany").click(function() {
+        	  
+              if (editTargetData == null) {
+            	  alert("更新公司信息之前请新增或获得编辑对象的公司信息。");
+            	  return;
+              }
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/company/json/setcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/company/setcompany";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除公司信息
+          $("#removeCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/company/json/removecompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/company/removecompany";
+                callAjax(url, data);
+              });
+          });
+        });
+        
+        var editTargetData = null; 
+
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        if (result.data) {
+                        	// 为了测试编辑处理，暂存编辑对象的数据
+                        	editTargetData = result.data;
+                        }
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        
+        // IF参数设定：检索公司列表
+        function setSearchCompanyInfo(data) {
+            
+            // 设定检索条件
+            var searchCondition = data.extension.searchCondition;
+            searchCondition.keyword = "";                       // 公司检索关键字（为空的话是全部内容）
+            
+            // 设定检索分页和排序条件
+            data.rowNum = 10;                                     // 每页有多少行记录
+            data.page = 1;                                             // 返回第几页记录
+            data.sortIndex = "companyName"              // 排序字段 companyCd：按公司Cd进行排序, companyName：按公司名进行排序
+            data.sortOrder = "asc";                               // 排序顺序
+          return data;
+        }
+        
+        // IF参数设定：新增公司
+        function setAddCompanyInfo(data) {
+        	  // 设定公司基本信息（和多语言无关的部分）
+            data.companyCd = "company001";  // 自主发行唯一的Cd
+            data.sortKey = "0";       // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定公司基本信息（和多语言（中文）有关的部分） 
+            var localedata = data.locales.zh_CN;
+            localedata.departmentName = "样例测试公司01";
+            localedata.departmentShortName = "样例测试公司01";
+            localedata.departmentSearchName = "样例测试公司01";
+            localedata.countryCd = "";
+            localedata.zipCode = "";
+            localedata.address1 = "";
+            localedata.address2 = "";
+            localedata.address3 = "";
+            localedata.telephoneNumber = "";
+            localedata.extensionNumber = "";
+            localedata.faxNumber = "";
+            localedata.extensionFaxNumber = "";
+            localedata.emailAddress1 = "";
+            localedata.emailAddress2 = "";
+            localedata.url = "";
+            localedata.notes = "";
+            return data;
+        }
+        
+        // IF参数设定：获得公司相信信息
+        function setGetCompanyInfo(data) {
+           data.companyCd = "company001";
+           return data;
+         }
+
+        
+        //  IF参数设定：更新公司信息
+        function setSetCompanyInfo(data) {
+            // 设定公司基本信息（和多语言无关的部分）
+            data.companyCd = "company001";  // 编辑对象公司Cd
+            data.sortKey = "0";       // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定公司基本信息（和多语言（中文）有关的部分） 
+            var localedata = data.locales.zh_CN;
+            localedata.departmentName = "样例测试公司01-编辑";
+            localedata.departmentShortName = "样例测试公司01-编辑";
+            localedata.departmentSearchName = "样例测试公司01-编辑";
+            localedata.countryCd = "countryCd";
+            localedata.zipCode = "123";
+            localedata.address1 = "address1";
+            localedata.address2 = "address2";
+            localedata.address3 = "address3";
+            localedata.telephoneNumber = "123456";
+            localedata.extensionNumber = "789012";
+            localedata.faxNumber = "123";
+            localedata.extensionFaxNumber = "234";
+            localedata.emailAddress1 = "test1@test.com";
+            localedata.emailAddress2 = "test2@test.com";
+            localedata.url = "http://url";
+            localedata.notes = "notes";
+            
+            return data;
+         }
+
+        // IF参数设定：删除公司信息
+        function setRemoveCompanyInfo(data) {
+           // 对象公司Code
+           data.push( { "companyCd" : "company001" } );
+            return data;
+        }
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="searchCompany">检索公司列表</button>
+    <button type="button" id="addCompany">登记公司</button>
+    <button type="button" id="getCompany">获得公司信息</button>
+    <button type="button" id="setCompany">更新公司信息</button>
+    <button type="button" id="removeCompany">删除公司信息</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

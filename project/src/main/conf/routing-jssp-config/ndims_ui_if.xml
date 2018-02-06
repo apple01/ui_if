@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- iAP产品标准功能画面后台处理UI接口URL映射设定 -->
+<routing-jssp-config xmlns="http://www.intra-mart.jp/router/routing-jssp-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.intra-mart.jp/router/routing-jssp-config routing-jssp-config.xsd ">
+    <authz-default mapper="welcome-all" />
+
+    <!-- 用户基本信息及账号信息登记、更新IF -->
+    <file-mapping path="ndims/init" page="init" />
+
+    <!-- 用户基本信息及账号信息登记、更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/user/setuser" page="ndims/ui_if/master/maintenance/user/user" action="setUser" />
+
+    <!-- 用户基本信息及账号信息删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/user/remove" page="ndims/ui_if/master/maintenance/user/user" action="remove" />
+
+    <!-- 用户基本信息及账号信息删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/user/search" page="ndims/ui_if/master/maintenance/user/user" action="search" />
+
+    <!-- 获得用户基本信息及账号信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/user/getuser" page="ndims/ui_if/master/maintenance/user/user" action="getUser" />
+
+    <!-- 创建公司IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/company/addcompany" page="ndims/ui_if/master/maintenance/company/company" action="newDepartment" />
+
+    <!-- 创建公司(级层)IF -->
+    <file-mapping path="/ui_if/master/maintenance/companyRelation/addcompany" page="ndims/ui_if/master/maintenance/company/companyRelation" action="newDepartment" />
+
+    <!-- 更新公司IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/company/setcompany" page="ndims/ui_if/master/maintenance/company/company" action="editDepartment" />
+
+    <!-- 删除公司IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/company/removecompany" page="ndims/ui_if/master/maintenance/company/company" action="removeCompany" />
+
+    <!-- 获取公司信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/company/getcompany" page="ndims/ui_if/master/maintenance/company/company" action="getCompany" />
+
+    <!-- 检索公司信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/company/searchcompany" page="ndims/ui_if/master/maintenance/company/company" action="searchCompany" />
+
+    <!-- 部门_检索公司直属部门信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/searchcompanydep" page="ndims/ui_if/master/maintenance/company/department" action="get_composites_by_route" />
+
+    <!-- 部门_检索部门下属子部门信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/searchsubdep" page="ndims/ui_if/master/maintenance/company/department" action="getSubCompany" />
+
+    <!-- 部门_所属人员IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/searchdepuser" page="ndims/ui_if/master/maintenance/company/department" action="getLeaves" />
+
+    <!-- 部门_所属成员追加IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/joinusers" page="ndims/ui_if/master/maintenance/company/department" action="joinUsers" />
+
+    <!-- 部门_所属成员解除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/detachuser" page="ndims/ui_if/master/maintenance/company/department" action="detachUser" />
+
+    <!-- 部门_新建更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/adddep" page="ndims/ui_if/master/maintenance/company/department" action="setDetail" />
+
+    <!-- 部门_新建更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/setdep" page="ndims/ui_if/master/maintenance/company/department" action="setDetail" />
+
+    <!-- 部门_详细IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/getdep" page="ndims/ui_if/master/maintenance/company/department" action="getDetail" />
+
+    <!-- 部门_检索IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/searchdep" page="ndims/ui_if/master/maintenance/company/department" action="search" />
+
+    <!-- 部门_删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/department/removedep" page="ndims/ui_if/master/maintenance/company/department" action="remove" />
+
+    <!-- 检索职位IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/post/searchpost" page="ndims/ui_if/master/maintenance/company/post" action="getLeaves" />
+
+    <!-- 职位新建更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/post/addpost" page="ndims/ui_if/master/maintenance/company/post" action="setDetail" />
+
+    <!-- 职位新建更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/post/setpost" page="ndims/ui_if/master/maintenance/company/post" action="setDetail" />
+
+    <!-- 职位详细IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/post/getpost" page="ndims/ui_if/master/maintenance/company/post" action="getDetail" />
+
+    <!-- 职位删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/post/removepost" page="ndims/ui_if/master/maintenance/company/post" action="remove" />
+
+    <!-- 集团_检索最上层集团信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/searchcompanygroup" page="ndims/ui_if/master/maintenance/company/department" action="get_composites_by_route" />
+
+    <!-- 集团_检索集团下属子集团信息IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/searchsubcompanygroup" page="ndims/ui_if/master/maintenance/company/companygroup" action="getSubCompanyGroup" />
+
+    <!-- 集团_新建IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/addcompanygroup" page="ndims/ui_if/master/maintenance/company/department" action="setDetail" />
+
+    <!-- 集团_新建IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/setcompanygroup" page="ndims/ui_if/master/maintenance/company/department" action="setDetail" />
+
+    <!-- 集团_详细IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/getcompanygroup" page="ndims/ui_if/master/maintenance/company/department" action="getDetail" />
+
+    <!-- 集团_删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/removecompanygroup" page="ndims/ui_if/master/maintenance/company/department" action="remove" />
+
+    <!-- 集团_所属公司IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/searchcompany" page="ndims/ui_if/master/maintenance/company/companygroup" action="getLeaves" />
+
+    <!-- 集团_所属公司追加IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/joincompanys" page="ndims/ui_if/master/maintenance/company/companygroup" action="joinCompanys" />
+
+    <!-- 集团_所属公司解除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/companygroup/detachcompany" page="ndims/ui_if/master/maintenance/company/companygroup" action="detachCompany" />
+
+    <!-- 角色_检索IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/searchrole" page="ndims/ui_if/master/maintenance/role/role" action="getList" />
+
+    <!-- 角色_新建IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/addrole" page="ndims/ui_if/master/maintenance/role/role" action="insert_role" />
+
+    <!-- 角色_更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/setrole" page="ndims/ui_if/master/maintenance/role/role" action="update_role" />
+
+    <!-- 角色_删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/removerole" page="ndims/ui_if/master/maintenance/role/role" action="delete_role" />
+
+    <!-- 角色_详细IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/getrole" page="ndims/ui_if/master/maintenance/role/role" action="get_role" />
+    
+    <!-- 角色_用户_追加IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/addroleaccount" page="ndims/ui_if/master/maintenance/role/role" action="insert_role_account" />
+
+    <!-- 角色_用户_更新IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/setroleaccount" page="ndims/ui_if/master/maintenance/role/role" action="update_role_account" />
+
+    <!-- 角色_用户_删除IF -->
+    <file-mapping path="ndims/ui_if/master/maintenance/role/removeroleaccount" page="ndims/ui_if/master/maintenance/role/role" action="delete_role_account" />
+
+    <!-- 工作流_申请一览IF -->
+    <file-mapping path="ndims/ui_if/workflow/apply_list" page="ndims/ui_if/workflow/workflow" action="apply_list" />
+
+    <!-- 工作流_临时保存一览IF -->
+    <file-mapping path="ndims/ui_if/workflow/temporary_save_list" page="ndims/ui_if/workflow/workflow" action="temporary_save_list_data" />
+
+    <!-- 工作流_未处理一览IF -->
+    <file-mapping path="ndims/ui_if/workflow/process_list" page="ndims/ui_if/workflow/workflow" action="process_list" />
+
+    <!-- 工作流_已处理未完了一览IF -->
+    <file-mapping path="ndims/ui_if/workflow/actv_proc_list" page="ndims/ui_if/workflow/workflow" action="actv_proc_list" />
+
+    <!-- 工作流_完了一览IF -->
+    <file-mapping path="ndims/ui_if/workflow/cpl_proc_list" page="ndims/ui_if/workflow/workflow" action="cpl_proc_list" />
+
+    <!-- 工作流_删除临时保存案件IF -->
+    <file-mapping path="ndims/ui_if/workflow/common/proc/tempDelete" page="ndims/ui_if/workflow/workflow" action="tempDelete" />
+
+    <!-- 工作流_申请IF -->
+    <file-mapping path="ndims/ui_if/workflow/common/proc/apply" page="ndims/ui_if/workflow/workflow" action="apply" />
+
+    <!-- 工作流_处理IF -->
+    <file-mapping path="ndims/ui_if/workflow/common/proc/proc" page="ndims/ui_if/workflow/workflow" action="proc" />
+
+     <!-- 个人设定_密码变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/passwordUpdate" page="ndims/ui_if/user/setting/setting" action="passwordUpdate" />
+ 
+     <!-- 个人设定_日历变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/calendarUpdate" page="ndims/ui_if/user/setting/setting" action="calendarUpdate" />
+    
+     <!-- 个人设定_区域变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/localeUpdate" page="ndims/ui_if/user/setting/setting" action="localeUpdate" />
+    
+     <!-- 个人设定_日期与时刻的形式变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/formatSetUpdate" page="ndims/ui_if/user/setting/setting" action="formatSetUpdate" />
+    
+     <!-- 个人设定_档案变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/profileUpdate" page="ndims/ui_if/user/setting/setting" action="profileUpdate" />
+    
+     <!-- 个人设定_菜单显示变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/menuDisplayUpdate" page="ndims/ui_if/user/setting/setting" action="menuDisplayUpdate" />
+    
+     <!-- 个人设定_数字形式变更IF -->
+    <file-mapping path="ndims/ui_if/user/setting/numberFormatUpdate" page="ndims/ui_if/user/setting/setting" action="numberFormatUpdate" />
+ 
+     <!-- 个人设定_日历变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/calendarInit" page="ndims/ui_if/user/setting/setting" action="calendarInit" />
+    
+     <!-- 个人设定_区域变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/localeInit" page="ndims/ui_if/user/setting/setting" action="localeInit" />
+    
+     <!-- 个人设定_日期与时刻的形式变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/formatSetInit" page="ndims/ui_if/user/setting/setting" action="formatSetInit" />
+    
+     <!-- 个人设定_档案变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/profileInit" page="ndims/ui_if/user/setting/setting" action="profileInit" />
+    
+     <!-- 个人设定_菜单显示变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/menuDisplayInit" page="ndims/ui_if/user/setting/setting" action="menuDisplayInit" />
+    
+     <!-- 个人设定_数字形式变更初始化IF -->
+    <file-mapping path="ndims/ui_if/user/setting/numberFormatInit" page="ndims/ui_if/user/setting/setting" action="numberFormatInit" />
+    
+     <!-- ViewCtreator_数据参照IF -->
+    <file-mapping path="ndims/ui_if/viewcreator/dataview/list/{dataview_cd}" page="ndims/ui_if/viewcreator/dataview" action="list" />
+
+     <!-- 个人设定_密码变更发送IF -->
+    <file-mapping path="ndims/ui_if/user/password/reset/send" page="ndims/ui_if/user/setting/setting" action="pwdResetSend" />
+
+     <!-- 个人设定_密码变更IF -->
+    <file-mapping path="ndims/ui_if/user/password/reset" page="ndims/ui_if/user/setting/setting" action="pwdReset" />
+    
+</routing-jssp-config>

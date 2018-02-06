@@ -1,0 +1,20 @@
+{
+    "extension": {
+        "imwCallOriginalParams": {
+            "temporarySaveListParams": {
+                "count": 15,
+                "offset": 0,
+                "orderByList": [
+                    {
+                        "sortOrder": "",
+                        "columnName": "listPageCol_FlowName",
+                        "sortType": "ASC",
+                        "columnClassify": "0"
+                    }
+                ],
+                "applyBaseDate": ""
+            },
+            "listPageType": "0"
+        }
+    }
+}

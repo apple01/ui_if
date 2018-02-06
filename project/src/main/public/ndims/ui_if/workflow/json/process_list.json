@@ -1,0 +1,52 @@
+{
+    "extension": {
+        "imwCallOriginalParams": {
+            "unprocListParams": {
+                "count": 15,
+                "offset": 0,
+                "orderByList": [
+                    {
+                        "sortOrder": "",
+                        "columnName": "listPageCol_MatterNumber",
+                        "sortType": "DESC",
+                        "columnClassify": "0"
+                    }
+                ],
+                "applyFlg": "1",
+                "approveFlg": "1",
+                "applyActFlg": "1",
+                "approveActFlg": "1",
+                "flowGroupId": [
+                    "",
+                    "",
+                    ""
+                ],
+                "groupHierarchy": "3",
+                "applyButton": "on",
+                "approveButton": "on",
+                "applyActButton": "on",
+                "approveActButton": "on",
+                "formParameters": "listPageCol_ProcLimitTo",
+                "listPageCol_Priority": "",
+                "listPageCol_MatterNumber": "",
+                "listPageCol_MatterName": "",
+                "listPageCol_BaseDateFrom": "",
+                "listPageCol_BaseDateTo": "",
+                "listPageCol_ApplyDateFrom": "",
+                "listPageCol_ApplyDateTo": "",
+                "listPageCol_ApplyUser": "",
+                "listPageCol_ApplyUserName": "",
+                "listPageCol_FlowName": "",
+                "listPageCol_NodeName": "",
+                "listPageCol_Status": "",
+                "listPageCol_ArriveDateFrom": "",
+                "listPageCol_ArriveDateTo": "",
+                "listPageCol_ProcLimitTo": "",
+                "listPatternId": "default_pattern_2",
+                "currentPage": 1
+            },
+            "imwCallOriginalPagePath": "im_workflow%2Fuser%2Fprocess%2Fprocess_list",
+            "imwSerialProcParams": null
+        }
+    }
+}

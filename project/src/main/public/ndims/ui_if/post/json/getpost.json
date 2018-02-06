@@ -1,0 +1,39 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.post.detail",
+        "baseDate": "2017/03/20",
+        "localeId": "zh_CN",
+        "companyCd": "comp_sample_01",
+        "companyName": "样例公司",
+        "isDisabled": true
+    },
+    "model": {},
+    "parameters": {
+        "isEdit": true,
+        "term": {
+            "termCd": "",
+            "startDate": "",
+            "endDate": "",
+            "deleteFlag": false
+        },
+        "parentInfo": {
+            "departmentCd": "",
+            "departmentSetCd": "",
+            "companyCd": "",
+            "displayName": "",
+            "description": ""
+        },
+        "recordInfo": {
+            "companyCd": "",
+            "departmentSetCd": "",
+            "postCd": "",
+            "rank": null,
+            "description": "",
+            "displayName": "",
+            "deleteFlag": false
+        },
+        "parameter": {
+            "isEdit": "true"
+        }
+    }
+}

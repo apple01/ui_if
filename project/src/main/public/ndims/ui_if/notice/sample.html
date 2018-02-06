@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+        	// 获取通知历史列表
+          $("#getNoticeHistoryResult").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/notice/json/getNoticeHistoryResult.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = getNoticeHistoryResultInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/notice/getNoticeHistoryResult";
+                callAjax(url, data);
+              });
+          });
+
+          // 获取通知历史件数
+          $("#countUnreadNoticeHistory").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/notice/json/countUnreadNoticeHistory.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = countUnreadNoticeHistoryInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/notice/countUnreadNoticeHistory";
+                callAjax(url, data);
+              });
+          });
+        	
+          // 更新通知历史记录为已读
+          $("#updateNoticeHasReadFlag").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/notice/json/updateNoticeHasReadFlag.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = updateNoticeHasReadFlagInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/notice/updateNoticeHasReadFlag";
+                callAjax(url, data);
+              });
+          });
+
+          // 更新通知历史记录为已读
+          $("#deleteNoticeHistory").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/notice/json/deleteNoticeHistory.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = deleteNoticeHistoryInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/notice/deleteNoticeHistory";
+                callAjax(url, data);
+              });
+          });
+
+      });
+
+    </script>
+
+  <script type="text/javascript">
+
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        
+        // IF参数设定：获取通知历史列表
+        function getNoticeHistoryResultInfo(data) {
+        	
+        	  data.start = 0;  // 从第几行开始检索
+        	  data.length = 0; // 检索最大行数 0为返回所有行
+        	  
+          return data;
+        }
+        
+        // IF参数设定：获取通知历史件数
+        function countUnreadNoticeHistoryInfo(data) {
+          return data;
+        }
+        
+        // IF参数设定：更新通知历史记录为已读
+        function updateNoticeHasReadFlagInfo(data) {
+          
+            data.noticeIds.push("8ec5mbdx1dnht2g8ec5mbebodni72g1490865078989");
+            
+          return data;
+        }
+        
+        // IF参数设定：删除通知历史记录
+        function deleteNoticeHistoryInfo(data) {
+          
+            data.noticeIds.push("8ec5mbdx1dnht2g8ec5mbebodni72g1490865078989");
+            
+          return data;
+        }
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="getNoticeHistoryResult">获取当前用户的通知历史列表</button>
+    <button type="button" id="countUnreadNoticeHistory">获取当前用户的通知历史件数</button>
+    <button type="button" id="updateNoticeHasReadFlag">更新当前用户的通知历史记录为已读</button>
+    <button type="button" id="deleteNoticeHistory">删除当前用户的通知历史记录</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

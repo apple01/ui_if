@@ -1,0 +1,74 @@
+
+<!-- ndims proc_templete start -->
+<form id="detailForm" name="detailForm" method="POST" target="IMW_DETAIL" action="im_workflow/common/switch/switch_content_detail">
+    <INPUT type="hidden" name="imwPageType" value="6"><INPUT type="hidden" name="imwSystemMatterId" value=""><INPUT type="hidden" name="imwUserDataId" value="">
+</form>
+<form id="flowForm" name="flowForm" method="POST" target="IMW_FLOW" action="im_workflow/common/unit/flow/flow">
+    <INPUT type="hidden" name="imwSystemMatterId" value="">
+</form>
+<form id="historyForm" name="historyForm" method="POST" target="IMW_HISTORY" action="im_workflow/common/unit/history/history">
+    <INPUT type="hidden" name="imwSystemMatterId" value="">
+</form>
+<form id="refreshForm" name="refreshForm" method="POST" action="im_workflow/user/cpl_proc/actv_proc_list/dispSearchFormAction">
+    <INPUT type="hidden" name="imwCallOriginalParams" value=""><INPUT type="hidden" name="listPageType" value="">
+</form>
+
+<script type="text/javascript">
+    var GB_ROOT_DIR = "workflow/csjs/greybox/";
+    var GB_form = 0;
+
+    function openPopupWindowDetail(form) {
+        var wnd = window.open('', form.target, 'status=yes,resizable=yes,scrollbars=yes,height=700,width=750');
+        wnd.focus();
+        form.submit();
+    }
+
+
+    function openPopupWindowFlow(form) {
+        var wnd = window.open('', form.target, 'status=yes,resizable=yes,scrollbars=yes,height=700,width=750');
+        wnd.focus();
+        form.submit();
+    }
+
+
+    function openPopupWindowHistory(form) {
+        var wnd = window.open('', form.target, 'status=yes,resizable=yes,scrollbars=yes,height=700,width=750');
+        wnd.focus();
+        form.submit();
+    }
+    
+    function onClickDetail(imwSystemMatterId, imwUserDataId) {
+        document.detailForm.imwSystemMatterId.value = imwSystemMatterId;
+        document.detailForm.imwUserDataId.value = imwUserDataId;
+        openPopupWindowDetail(document.detailForm);
+    }
+
+    function onClickFlow(imwSystemMatterId) {
+        document.flowForm.imwSystemMatterId.value = imwSystemMatterId;
+        openPopupWindowFlow(document.flowForm);
+    }
+
+    function onClickHistory(imwSystemMatterId) {
+        document.historyForm.imwSystemMatterId.value = imwSystemMatterId;
+        openPopupWindowHistory(document.historyForm);
+    }
+
+    function onClickRefresh(param) {
+          document.refreshForm.listPageType.value = '4';
+          document.refreshForm.imwCallOriginalParams.value = encodeURI(JSON.stringify(param.extension.imwCallOriginalParams));
+          document.refreshForm.submit();
+    }
+      
+</script>
+
+<script type="text/javascript" src="workflow/csjs/common.js"></script>
+<script type="text/javascript" src="workflow/csjs/workflow_open_page.js"></script>
+<script type="text/javascript"
+  src="workflow/csjs/workflow_open_page_matter_detail.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS_fx.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/gb_scripts.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox.js"></script>
+<link type="text/css" rel="stylesheet" href="workflow/csjs/greybox/gb_styles.css">
+
+<!-- ndims proc_templete end -->

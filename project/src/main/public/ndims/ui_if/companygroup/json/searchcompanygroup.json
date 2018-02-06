@@ -1,0 +1,9 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.companygroup.treeview",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "isDisabled": true
+    },
+    "route": []
+}

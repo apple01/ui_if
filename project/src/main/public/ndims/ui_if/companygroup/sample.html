@@ -1,0 +1,384 @@
+<html>
+
+<head>
+<base href='http://localhost:8080/imart/' target="_self">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="ui/libs/jquery-1.7.2.js"></script>
+</head>
+
+<header>
+  <script type="text/javascript">
+        jQuery(document).ready(function() {
+            
+        	// 检索最上层集团列表信息
+          $("#searchCompanyGroup").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/searchcompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/searchcompanygroup";
+                callAjax(url, data);
+              });
+          });
+          // 检索集团所属子集团列表信息
+          $("#searchSubCompanyGroup").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/searchsubcompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchSubCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/searchsubcompanygroup";
+                callAjax(url, data);
+              });
+          });
+          
+          // 新建集团信息
+          $("#addCompanyGroup").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/addcompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setAddCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/addcompanygroup";
+                callAjax(url, data);
+              });
+          });
+          // 获得集团详细信息
+          $("#getCompanyGroup").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/getcompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setGetCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/getcompanygroup";
+                callAjax(url, data);
+              });
+          });
+
+          // 更新集团信息
+          $("#setCompanyGroup").click(function() {
+              if (editTargetData == null) {
+                alert("更新对象信息之前请新增或获得编辑对象的信息。");
+                return;
+              }
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/setcompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSetCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/setcompanygroup";
+                callAjax(url, data);
+              });
+          });
+          
+          // 删除集团信息
+          $("#removeCompanyGroup").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/removecompanygroup.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setRemoveCompanyGroupInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/removecompanygroup";
+                callAjax(url, data);
+              });
+          });
+          
+          // 检索集团所属公司信息
+          $("#searchCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/searchcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setSearchCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/searchcompany";
+                callAjax(url, data);
+              });
+          });
+          
+          // 在集团中追加所属公司
+          $("#joinCompanys").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/joincompanys.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setJoinCompanysInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/joincompanys";
+                callAjax(url, data);
+              });
+          });
+
+          // 在集团中移除所属公司
+          $("#detachCompany").click(function() {
+              // 读入包含默认结构和参数的Json
+              var jsondatapath="ndims/ui_if/companygroup/json/detachcompany.json";
+              $.getJSON(jsondatapath, function(obj) { 
+                var data = setDetachCompanyInfo(obj);
+                $("#request").text(JSON.stringify(data, null, "  "));
+                var url = "ndims/ui_if/master/maintenance/companygroup/detachcompany";
+                callAjax(url, data);
+              });
+          });
+          
+        });
+    </script>
+
+  <script type="text/javascript">
+        var editTargetData = null;
+  
+        function callAjax(url, data) {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                contentType : 'application/json;charset=utf-8',
+                headers : { 'x-jp-co-intra-mart-ajax-request-from-imui-form-util': 'true' },
+                data : JSON.stringify(data),
+                dataType : 'json',
+                success : function(result) {
+                    if (!result.error) {
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                        if (result.data) {
+                        	// 为了测试编辑处理，暂存编辑对象的数据
+                        	editTargetData = result.data;
+                        }
+                        return result;
+                    } else {
+                        alert("处理失败！");
+                        $("#result").text(JSON.stringify(result, null , "  "));
+                    }
+                },
+                error : function(XMLHttpRequest, errorMessage, error) {
+                    alert("发生Ajax错误！:" + errorMessage);
+                    $("#result").text(XMLHttpRequest.responseText);
+                }
+            });
+        }
+
+        // IF参数设定：检索公司直属集团信息
+        function setSearchCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            return data;
+        }
+
+        // IF参数设定：检索集团下属子集团信息
+        function setSearchSubCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 获取以下集团的子集团信息（仅取得下属一级）
+            data.composite.companyGroupCd = "test_companygroup_001"
+            data.composite.companyGroupSetCd = data.composite.companyGroupCd;   // companygroupSetCd默认和companyGroupCd一致
+            
+          return data;
+        }
+
+        // IF参数设定：新建集团信息
+        function setAddCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            var main = data.model["jp.co.intra_mart.master.companygroup.detail.main"];
+            main.companyGroupCd = "test_companygroup_001"; // 自主发行唯一的Cd
+            main.sortKey = "0";       // 强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定中文信息
+            var localedata = main.localedata.zh_CN;
+            localedata.companyGroupName = "样例测试集团01";
+            localedata.companyGroupShortName = "样例测试集团01";
+            localedata.companyGroupSearchName = "样例测试集团01";
+            localedata.notes = "样例";
+            
+            // 父集团信息
+            // 如果想建立最上级集团的话，
+            data.parameters.parentInfo = null;
+            
+            // 如果想建立子集团的话，
+            // var parentInfo = data.parameters.parentInfo;
+            // parentInfo.companyGroupCd = "xxx";  // 父集团的Cd
+            // parentInfo.companyGroupSetCd = parentInfo.companyGroupCd;
+            
+          return data;
+        }
+        
+        // IF参数设定：获得集团详细信息
+        function setGetCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 获得信息对象的集团Cd信息
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyGroupCd = "test_companygroup_001";
+            recordInfo.companyGroupSetCd = recordInfo.companyGroupCd;
+
+          return data;
+        }
+
+        // IF参数设定：更新集团详细信息
+        function setSetCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 更新对象集团的Key信息
+            var recordInfo = data.parameters.recordInfo;
+            recordInfo.companyGroupCd = "test_companygroup_001";  // 更新对象集团Cd
+            recordInfo.companyGroupSetCd = recordInfo.companyGroupCd;
+
+            // 更新对象期间ID（获得用户信息时可以取得该ID）
+            var term = data.parameters.term;
+            term.termCd = editTargetData["jp.co.intra_mart.master.companygroup.detail.main"].termCd;
+            
+            var main = data.model["jp.co.intra_mart.master.companygroup.detail.main"];
+            main.companyGroupCd = recordInfo.companyGroupCd;
+            main.companyGroupSetCd = recordInfo.companyGroupSetCd;
+            
+            main.sortKey = "0";       //强制排序顺序，如无特殊需要可以全部设定为0;
+            
+            // 设定中文信息
+            var localedata = main.localedata.zh_CN;
+            localedata.companyGroupName = "样例测试集团01-编辑";
+            localedata.companyGroupShortName = "样例测试集团01-编辑";
+            localedata.companyGroupSearchName = "样例测试集团01-编辑";
+            localedata.notes = "样例-编辑";
+            
+            // 仅希望更改父集团信息时
+            // var parentInfo = {};
+            // data.parameters.parentInfo = parentInfo;
+            // parentInfo.companyGroupCd = "xxx";  // 父集团的Cd
+            // parentInfo.companyGroupSetCd = parentInfo.companyGroupCd;
+            
+          return data;
+        }
+
+        // IF参数设定：删除集团信息
+        function setRemoveCompanyGroupInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 删除对象集团Key信息
+            var main = data.model["jp.co.intra_mart.master.companygroup.detail.main"];
+            main.companyGroupCd = "test_companygroup_001";
+            main.companyGroupSetCd = main.companyGroupCd;
+
+          return data;
+        }
+        
+        // IF参数设定：检索集团所属公司信息
+        function setSearchCompanyInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 删除对象集团Key信息
+            var composite = data.composite;
+            composite.companyGroupCd = "test_companygroup_001"; //检索对象集团Cd
+            composite.companyGroupSetCd = composite.companyGroupCd;
+
+            // 设定检索分页和排序条件
+            data.start = 1;                                     // 检索起始记录行
+            data.count = 10;                                   // 一个分页行数（返回几行记录）, 设定0的话返回所有行
+            data.sortTarget = "code";                    // 排序关键字， code：按用户Cd进行排序, displayName：按用户名进行排序
+            data.sortDirection = "";                        // 排序顺序，
+            
+          return data;
+        }
+        
+        // IF参数设定：在集团中追加所属公司
+        function setJoinCompanysInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+            
+            // 要追加所属公司的集团信息
+            var parent = data.parent;
+            parent.companyGroupCd = "test_companygroup_001"; 
+            parent.companyGroupSetCd = parent.companyGroupCd;
+
+            // 要追加的用户信息
+            var children = data.children;
+            children.push({ "companyCd" : "comp_sample_01"});
+            children.push({ "companyCd" : "comp_other_01"});
+          
+          return data;
+        }
+        
+        // IF参数设定：在集团中移除所属公司
+        function setDetachCompanyInfo(data) {
+            // 设定检索基准日
+            var basicInfo = data.basicInfo;
+            var now = new Date();
+            var strNow = now.getFullYear() +"/" + ("0"+(now.getMonth()+1)).slice(-2) +"/" + ("0"+now.getDate()).slice(-2);
+            basicInfo.baseDate = strNow;  // 设置yyyy/mm/dd格式
+
+            // 要移除所属公司的集团信息
+            var parent = data.parentInfo;
+            parent.companyGroupCd = "test_companygroup_001"; 
+            parent.companyGroupSetCd = parent.companyGroupCd;
+            
+            // 要去除的用户信息
+            var recordInfo = data.recordInfo;
+            recordInfo.companyCd = "comp_other_01";
+            
+          return data;
+        }
+        
+        
+    </script>
+</header>
+
+<body>
+
+  <div>
+    <button type="button" id="searchCompanyGroup">检索最上层集团列表信息</button>
+    <button type="button" id="searchSubCompanyGroup">检索集团所属子集团列表信息</button>
+    <button type="button" id="addCompanyGroup">新建集团</button>
+    <button type="button" id="getCompanyGroup">获得集团详细信息</button>
+    <button type="button" id="setCompanyGroup">更新集团信息</button>
+    <button type="button" id="removeCompanyGroup">删除集团信息</button>
+    
+    <button type="button" id="searchCompany">检索集团所属公司</button>
+    <button type="button" id="joinCompanys">在集团中追加所属公司</button>
+    <button type="button" id="detachCompany">在集团中移除所属公司</button>
+  </div>
+
+  <br>
+
+  <div>
+    <table border="1">
+      <tr>
+        <td>Request参数：</td>
+        <td><textarea id="request" cols="80" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td>运行结果：</td>
+        <td><textarea id="result" cols="80" rows="20"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

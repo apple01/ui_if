@@ -1,0 +1,30 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.company.attachterms.serverside",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "companyCd": "",
+        "companyName": "",
+        "isDisabled": true
+    },
+    "recordInfo": {
+        "userCd": "",
+        "departmentMain": false,
+        "description": "",
+        "displayName": "",
+        "deleteFlag": false,
+        "companyCd": "",
+        "departmentSetCd": "",
+        "departmentCd": ""
+    },
+    "parentInfo": {
+        "companyCd": "",
+        "departmentCd": "",
+        "departmentSetCd": "",
+        "displayName": "",
+        "description": ""
+    },
+    "parameter": {
+        "termsInfo": []
+    }
+}

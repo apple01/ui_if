@@ -1,0 +1,29 @@
+{
+    "extension": {
+        "imwCallOriginalParams": {
+            "applyListParams": {
+                "count": 15,
+                "offset": 0,
+                "orderByList": [
+                    {
+                        "sortOrder": "",
+                        "columnName": "listPageCol_FlowName",
+                        "sortType": "ASC",
+                        "columnClassify": "0"
+                    }
+                ],
+                "applyUserCd": "",
+                "applyBaseDate": "",
+                "groupHierarchy": "3",
+                "selsValue": "",
+                "formParameters": "listPageCol_FlowVersionNote",
+                "listPageCol_FlowName": "",
+                "listPageCol_FlowVersionNote": "",
+                "listPatternId": "default_pattern_0",
+                "currentPage": 1
+        
+            },
+            "listPageType": "0"
+        }
+    }
+}

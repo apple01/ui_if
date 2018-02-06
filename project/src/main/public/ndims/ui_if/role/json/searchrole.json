@@ -1,0 +1,10 @@
+{
+    "extension": {
+        "searchRoleName": "",
+        "searchRoleCategory": ""
+    },
+    "page": 1,
+    "rowNum": 10,
+    "sortOrder": "asc",
+    "sortIndex": "roleName"
+}

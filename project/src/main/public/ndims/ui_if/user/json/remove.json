@@ -1,0 +1,101 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.user.detail",
+        "baseDate": "",
+        "localeId": "zh_CN"
+    },
+    "modelInfo": {
+        "jp.co.intra_mart.master.user.detail.main": {
+            "userCd": "",
+            "isUpdated": "false"
+        },
+        "jp.co.intra_mart.master.user.detail.profileAttach": {
+            "defaultLocale": "zh_CN",
+            "locale": "中文 (中国)",
+            "sex": "0",
+            "sortKey": "0",
+            "localedata": {
+                "zh_CN": {
+                    "userName": "",
+                    "userSearchName": "",
+                    "countryCd": "",
+                    "zipCode": "",
+                    "address1": "",
+                    "address2": "",
+                    "address3": "",
+                    "telephoneNumber": "",
+                    "extensionNumber": "",
+                    "faxNumber": "",
+                    "extensionFaxNumber": "",
+                    "mobileNumber": "",
+                    "emailAddress1": "",
+                    "emailAddress2": "",
+                    "mobileEmailAddress": "",
+                    "url": "",
+                    "notes": ""
+                }
+            },
+            "isUpdated": "false"
+        },
+        "jp.co.intra_mart.master.user.detail.accountAttach": {
+            "locale": "",
+            "license": false,
+            "validStartDate": "",
+            "validEndDate": "",
+            "timezone": "",
+            "firstDayOfWeek": "-1",
+            "calendarId": "",
+            "datetimeFormat": "",
+            "dateFormatStandard": "",
+            "dateFormatSimple": "",
+            "timeFormatTimestamp": "",
+            "timeFormatStandard": "",
+            "datetimeLocale": "undefined",
+            "firstLogin": false,
+            "accountLock": false,
+            "loginFailureCount": "0",
+            "pagePatternId": "",
+            "notes": "",
+            "imgUrl": "",
+            "isUpdated": "false",
+            "decimalFormat": ""
+        },
+        "jp.co.intra_mart.master.user.detail.roleAttach": {
+            "roleTermsInfo": [],
+            "appTermsInfo": [],
+            "removedRoleParents": [],
+            "removedAppParents": []
+        },
+        "jp.co.intra_mart.master.user.detail.departmentAttach": {
+            "termsInfo": [],
+            "removedParents": []
+        },
+        "jp.co.intra_mart.master.user.detail.publicgroupAttach": {
+            "termsInfo": [],
+            "removedParents": []
+        },
+        "jp.co.intra_mart.master.user.detail.categoryItemAttach": {
+            "termsInfo": [],
+            "removedParents": []
+        },
+        "jp.co.intra_mart.master.user.detail.external_user": {
+            "external_user": false,
+            "isUpdated": "false"
+        }
+    },
+    "parameters": {
+        "isEdit": true,
+        "term": {},
+        "parentInfo": null,
+        "recordInfo": {
+            "userCd": "",
+            "description": "",
+            "displayName": "",
+            "deleteFlag": true,
+            "code": ""
+        },
+        "parameter": {
+            "isEdit": "true"
+        }
+    }
+}

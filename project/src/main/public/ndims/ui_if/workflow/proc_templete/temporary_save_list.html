@@ -1,0 +1,98 @@
+<!-- ndims proc_templete start -->
+
+  <form id="changeBaseDateGreyBoxForm" name="changeBaseDateGreyBoxForm" method="post" action="im_workflow/user/apply/temporary_save_change_base_date">
+    <INPUT type="hidden" name="imwAuthUserCode" value=""><INPUT type="hidden" name="imwApplyBaseDate" value=""><INPUT type="hidden" name="imwFlowId" value=""><INPUT type="hidden" name="imwNodeId" value=""><INPUT type="hidden" name="imwUserDataId" value="">
+  </form>
+  <form id="refreshForm" name="refreshForm" method="post" action="im_workflow/user/apply/apply_list/actionDispSearch">
+    <INPUT type="hidden" name="imwCallOriginalParams" value=""><INPUT type="hidden" name="listPageType" value="">
+  </form>
+  <form id="applyForm" name="applyForm" method="post" action="im_workflow/common/switch/switch_content">
+    <INPUT type="hidden" name="imwCallOriginalParams" value=""><INPUT type="hidden" name="imwPageType" value=""><INPUT type="hidden" name="imwAuthUserCode" value=""><INPUT type="hidden" name="imwApplyBaseDate" value=""><INPUT type="hidden" name="imwFlowId" value=""><INPUT type="hidden" name="imwNodeId" value=""><INPUT type="hidden" name="imwUserDataId" value="">
+  </form>
+  <form id="flowForm" name="flowForm" method="post" target="IMW_FLOW" action="im_workflow/common/unit/flow/flow">
+    <INPUT type="hidden" name="imwFlowId" value=""><INPUT type="hidden" name="imwApplyBaseDate" value="">
+  </form>
+<script type="text/javascript">
+    var GB_ROOT_DIR = "workflow/csjs/greybox/";
+    var GB_form = 0;
+      
+    function openPopupWindowFlow(form) {
+        var wnd = window.open('', form.target, 'status=yes,resizable=yes,scrollbars=yes,height=700,width=750');
+        wnd.focus();
+        form.submit();
+    }
+    
+    function onClickApplyTemp(flowId, nodeId, userDataId, actUserCode, applyBaseDate, param) {
+        document.applyForm.imwPageType.value = '1';
+        document.applyForm.imwCallOriginalParams.value = encodeURI(JSON.stringify(param.extension.imwCallOriginalParams));
+        document.applyForm.imwFlowId.value = flowId;
+        document.applyForm.imwNodeId.value = nodeId;
+        document.applyForm.imwUserDataId.value = userDataId;
+        document.applyForm.imwAuthUserCode.value = actUserCode;
+        document.applyForm.imwApplyBaseDate.value = applyBaseDate;
+        document.applyForm.submit();
+      }
+
+      function onClickTemporaryDelete(userDataId, callBackFuntionName) {
+          var oReqParam = {
+            "userDataId" : userDataId
+          }
+          
+          $.ajax({
+              type : 'POST',
+              url : 'ndims/ui_if/workflow/common/proc/tempDelete',
+              contentType : 'application/json;charset=utf-8',
+              headers : {
+                  'x-jp-co-intra-mart-ajax-request-from-imui-form-util' : 'true'
+              },
+              data : JSON.stringify(oReqParam),
+              dataType : 'json',
+              success : function(result) {
+                  //譬ｹ謐ｮ蜃ｽ謨ｰ蜷榊ｾ怜芦蜃ｽ謨ｰ邀ｻ蝙�
+                  var  callBackFuntion = eval(callBackFuntionName);
+                  //蛻帛ｻｺ蜃ｽ謨ｰ蟇ｹ雎｡�ｼ悟ｹｶ隹�逕ｨ
+                  new callBackFuntion(result);
+              },
+              error : function(XMLHttpRequest, errorMessage, error) {
+                  alert("蜿醍函Ajax髞呵ｯｯ�ｼ�:" + errorMessage);
+                  $("#result").text(XMLHttpRequest.responseText);
+              }
+          });
+
+      }
+
+      function onClickChangeBaseDate(flowId, nodeId, userDataId, authUserCode, baseDate) {
+        document.changeBaseDateGreyBoxForm.imwFlowId.value = flowId;
+        document.changeBaseDateGreyBoxForm.imwNodeId.value = nodeId;
+        document.changeBaseDateGreyBoxForm.imwUserDataId.value = userDataId;
+        document.changeBaseDateGreyBoxForm.imwAuthUserCode.value = authUserCode;
+        document.changeBaseDateGreyBoxForm.imwApplyBaseDate.value = baseDate;
+        
+        showGreyBox(document.changeBaseDateGreyBoxForm);
+      }
+
+      function onClickFlow(flowId, applyBaseDate) {
+        document.flowForm.imwFlowId.value = flowId;
+        document.flowForm.imwApplyBaseDate.value = applyBaseDate;
+        openPopupWindowFlow(document.flowForm);
+      }
+      
+      function onClickRefresh() {
+          document.refreshForm.listPageType.value = '1';
+          document.refreshForm.imwCallOriginalParams.value = encodeURI(JSON.stringify(param.extension.imwCallOriginalParams));
+          document.refreshForm.submit();
+        }
+    
+</script>
+
+<script type="text/javascript" src="workflow/csjs/common.js"></script>
+<script type="text/javascript" src="workflow/csjs/workflow_open_page.js"></script>
+<script type="text/javascript"
+  src="workflow/csjs/workflow_open_page_matter_detail.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/AJS_fx.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox/gb_scripts.js"></script>
+<script type="text/javascript" src="workflow/csjs/greybox.js"></script>
+<link type="text/css" rel="stylesheet" href="workflow/csjs/greybox/gb_styles.css">
+
+<!-- ndims proc_templete end -->

@@ -1,0 +1,49 @@
+{
+    "basicInfo": {
+        "extensionPoint": "jp.co.intra_mart.foundation.master.setting.post.detail",
+        "baseDate": "",
+        "localeId": "zh_CN",
+        "companyCd": "",
+        "companyName": "",
+        "isDisabled": true
+    },
+    "model": {
+        "jp.co.intra_mart.master.post.detail.main": {
+            "defaultLocale": "zh_CN",
+            "locale": "中文 (中国)",
+            "postCd": "",
+            "companyCd": "",
+            "departmentSetCd": "",
+            "departmentDisplayName": "",
+            "rank": "0",
+            "sortKey": "0",
+            "localedata": {
+                "zh_CN": {
+                    "postName": "test",
+                    "notes": ""
+                }
+            },
+            "isUpdated": "true"
+        }
+    },
+    "parameters": {
+        "isEdit": false,
+        "term": {
+            "termCd": "",
+            "startDate": "1900/01/01 00:00:00",
+            "endDate": "3000/01/01 00:00:00",
+            "deleteFlag": false
+        },
+        "parentInfo": {
+            "departmentCd": "",
+            "departmentSetCd": "",
+            "companyCd": "",
+            "displayName": "",
+            "description": ""
+        },
+        "recordInfo": null,
+        "parameter": {
+            "isEdit": "false"
+        }
+    }
+}
